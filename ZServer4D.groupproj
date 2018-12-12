@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{B63BDF64-0443-484E-82D1-69E11C23DB0D}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="MyServer\MyServer.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Client\VirtualAuth_Client.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="FMXClient\MyAPP.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="MyServer">
+        <MSBuild Projects="MyServer\MyServer.dproj"/>
+    </Target>
+    <Target Name="MyServer:Clean">
+        <MSBuild Projects="MyServer\MyServer.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MyServer:Make">
+        <MSBuild Projects="MyServer\MyServer.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VirtualAuth_Client">
+        <MSBuild Projects="Client\VirtualAuth_Client.dproj"/>
+    </Target>
+    <Target Name="VirtualAuth_Client:Clean">
+        <MSBuild Projects="Client\VirtualAuth_Client.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VirtualAuth_Client:Make">
+        <MSBuild Projects="Client\VirtualAuth_Client.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="MyAPP">
+        <MSBuild Projects="FMXClient\MyAPP.dproj"/>
+    </Target>
+    <Target Name="MyAPP:Clean">
+        <MSBuild Projects="FMXClient\MyAPP.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MyAPP:Make">
+        <MSBuild Projects="FMXClient\MyAPP.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="MyServer;VirtualAuth_Client;MyAPP"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="MyServer:Clean;VirtualAuth_Client:Clean;MyAPP:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="MyServer:Make;VirtualAuth_Client:Make;MyAPP:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
