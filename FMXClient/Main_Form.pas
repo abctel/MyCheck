@@ -14,16 +14,13 @@ uses
   uComponentType,
   // uGPSLocation,
   uBaseHttpControl,
-
-  FMX.Platform,
+  DM_Form,
 {$IFDEF ANDROID}
   Androidapi.Helpers,
 {$ENDIF}
   MessageBoxFrame,
   PopupMenuFrame,
   ViewPictureListFrame,
-  //uRemoteServerDIOCPImpl,
-  uIRemoteServer,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   FMX.Controls.Presentation, FMX.StdCtrls, uSkinFireMonkeyControl,
   uSkinFireMonkeyPanel, uSkinFireMonkeyImage, FMX.ScrollBox, FMX.Memo,
@@ -51,8 +48,8 @@ type
     { Private declarations }
   private
     FGestureManager: TGestureManager;
-    //RemoteSrvOBJ: TRemoteServerDIOCPImpl;
-    //RemoteSrv: IRemoteServer;
+    // RemoteSrvOBJ: TRemoteServerDIOCPImpl;
+    // RemoteSrv: IRemoteServer;
   public
     // FGPSLocation: TGPSLocation;
 
@@ -107,8 +104,8 @@ begin
   // 修复Android下的虚拟键盘隐藏和显示
   GetGlobalVirtualKeyboardFixer.StartSync(Self);
   // ===========================以下是服务端初始化==============================
-  //RemoteSrvOBJ := TRemoteServerDIOCPImpl.Create;
-  //RemoteSrv := RemoteSrvOBJ;
+  // RemoteSrvOBJ := TRemoteServerDIOCPImpl.Create;
+  // RemoteSrv := RemoteSrvOBJ;
 end;
 
 procedure TfrmMain.FormDestroy(Sender: TObject);
@@ -180,9 +177,9 @@ begin
   //
   // 可以在此设置DIOCP端口访问服务
   try
-    //RemoteSrvOBJ.setHost(Host);
-    //RemoteSrvOBJ.setPort(StrToInt(Port));
-    //RemoteSrvOBJ.open;
+    // RemoteSrvOBJ.setHost(Host);
+    // RemoteSrvOBJ.setPort(StrToInt(Port));
+    // RemoteSrvOBJ.open;
   except
     on E: Exception do
       // ShowMessage('服务器连接失败！Host:'+Host+' Port:'+Port);

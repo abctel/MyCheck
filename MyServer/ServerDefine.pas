@@ -37,19 +37,19 @@ const
   /// <summary>
   /// 数据库名称
   /// </summary>
-  ConnDatabase = 'mycheck';
+  ConnDatabase = 'MyCheck';
   /// <summary>
   /// 数据库访问账号
   /// </summary>
-  ConnUserName = 'root';
+  ConnUserName = 'MyCheck';
   /// <summary>
   /// 数据库访问密码
   /// </summary>
-  ConnPassword = 'haosql';
+  ConnPassword = '5333564Zyl';
   /// <summary>
   /// 数据库访问IP
   /// </summary>
-  ConnServer = '127.0.0.1';
+  ConnServer = 'chuanqi.i066.com';
   /// <summary>
   /// 数据库访问端口
   /// </summary>

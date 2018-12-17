@@ -8,7 +8,6 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes,
   System.Variants,
   uFuncCommon,
-  uIRemoteServer,
   WaitingFrame,
   MessageBoxFrame,
   uTimerTask,
@@ -47,7 +46,6 @@ type
   private
     FLoginUser: String;
     FLoginPass: String;
-    RemoteSrv: IRemoteServer;
     procedure DoLoginExecute(ATimerTask: TObject);
     procedure DoLoginExecuteEnd(ATimerTask: TObject);
     { Private declarations }
