@@ -152,7 +152,7 @@ begin
       Close;
       SQL.Clear;
       SQL.Add('SELECT `auth_user`.`Login_Name`, `auth_user`.`Login_Pass` FROM `auth_user` WHERE `auth_user`.`Login_Name` = ' + '''' + LoginName + '''' + ' AND `auth_user`.`Login_Pass` = ' + '''' + LoginPass + '''');
-      DoStatus(SQL);
+      //DoStatus(SQL);
       Open;
       if RecordCount > 0 then
       begin

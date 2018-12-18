@@ -154,18 +154,18 @@ end;
 
 procedure TMyServer.UserAuth(Sender: TVirtualAuthIO);
 begin
-  inherited;
-  if AuthQuery(Sender.UserID, Sender.Passwd) then
-  begin
-    Sender.Accept;
-    DoStatus(Sender.UserID + 'µÇÂ¼³É¹¦');
-  end
-  else
-  begin
-    Sender.Reject;
-    DoStatus(Sender.UserID + 'µÇÂ¼Ê§°Ü');
-  end;
-
+  inherited UserAuth(Sender);
+//  if AuthQuery(Sender.UserID, Sender.Passwd) then
+//  begin
+//    Sender.Accept;
+//    DoStatus(Sender.UserID + 'µÇÂ¼³É¹¦');
+//  end
+//  else
+//  begin
+//    Sender.Reject;
+//    DoStatus(Sender.UserID + 'µÇÂ¼Ê§°Ü');
+//  end;
+     Sender.Accept;
 end;
 
 procedure TMyServer.UserLinkSuccess(UserDefineIO: TPeerClientUserDefineForRecvTunnel_VirtualAuth);
