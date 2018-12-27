@@ -1,0 +1,155 @@
+object FrameLogin: TFrameLogin
+  Size.Width = 325.000000000000000000
+  Size.Height = 462.000000000000000000
+  Size.PlatformDefault = False
+  object pnlToolBar: TSkinFMXPanel
+    ParentMouseEvent = False
+    ComponentTypeUseKind = ctukDefault
+    MaterialUseKind = mukRef
+    KeepSelfOwnMaterial = False
+    RefMaterial = DataModule1.pnlToolBarMaterial
+    MouseDownFocus = False
+    Align = Top
+    Size.Width = 325.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Caption = 'Login_Frame'
+    Text = 'Login_Frame'
+    Properties.IsToolBar = False
+  end
+  object SkinFMXButton1: TSkinFMXButton
+    ParentMouseEvent = False
+    ComponentTypeUseKind = ctukDefault
+    MaterialUseKind = mukRef
+    KeepSelfOwnMaterial = True
+    SelfOwnMaterial.DrawHelpTextParam.FontColor = claGray
+    SelfOwnMaterial.DrawHelpTextParam.DrawFont.Color = claGray
+    SelfOwnMaterial.DrawHelpTextParam.DrawFont.FontColor.Color = claGray
+    RefMaterial = DataModule1.btnRedColorButtonMaterial
+    MouseDownFocus = False
+    Position.X = 24.000000000000000000
+    Position.Y = 168.000000000000000000
+    Size.Width = 273.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Caption = #30331' '#38470
+    Text = #30331' '#38470
+    Properties.AutoSize = False
+    Properties.IsAutoPush = False
+    Properties.IsPushed = False
+    Properties.ButtonIndex = -1
+    Properties.PushedGroupIndex = 0
+  end
+  object SkinFMXPanel1: TSkinFMXPanel
+    ParentMouseEvent = False
+    ComponentTypeUseKind = ctukDefault
+    MaterialUseKind = mukRef
+    KeepSelfOwnMaterial = True
+    RefMaterial = DataModule1.pnlBlackCaptionLeftMarginPanelMaterial
+    MouseDownFocus = False
+    Align = Top
+    Position.Y = 50.000000000000000000
+    Size.Width = 325.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Caption = #36134#21495
+    Text = #36134#21495
+    Properties.IsToolBar = False
+    object edtUserName: TSkinFMXEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Align = Client
+      TabOrder = 0
+      Margins.Left = 100.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Size.Width = 220.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      TextPrompt = #35831#36755#20837#36134#21495
+      StyledSettings = [Family, Style, FontColor]
+      ParentMouseEvent = False
+      ComponentTypeUseKind = ctukDefault
+      MaterialUseKind = mukRef
+      KeepSelfOwnMaterial = True
+      SelfOwnMaterial.DrawHelpTextParam.FontColor = claGray
+      SelfOwnMaterial.DrawHelpTextParam.DrawFont.Color = claGray
+      SelfOwnMaterial.DrawHelpTextParam.DrawFont.FontColor.Color = claGray
+      RefMaterial = DataModule1.edtHelpTextMaterial
+      ContentMarginsLeft = 0
+      ContentMarginsTop = 0
+      ContentMarginsRight = 0
+      ContentMarginsBottom = 0
+      IsUseDefaultStyle = False
+      EditProperties.IsDrawHelpWhenFocused = False
+      Properties.IsDrawHelpWhenFocused = False
+      IsInScrollBox = False
+      object ClearEditButton1: TClearEditButton
+        CanFocus = False
+        Cursor = crArrow
+        Size.Width = 28.000000000000000000
+        Size.Height = 36.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+      end
+    end
+  end
+  object SkinFMXPanel2: TSkinFMXPanel
+    ParentMouseEvent = False
+    ComponentTypeUseKind = ctukDefault
+    MaterialUseKind = mukRef
+    KeepSelfOwnMaterial = True
+    RefMaterial = DataModule1.pnlBlackCaptionLeftMarginPanelMaterial
+    MouseDownFocus = False
+    Align = Top
+    Position.Y = 100.000000000000000000
+    Size.Width = 325.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    Caption = #23494#30721
+    Text = #23494#30721
+    Properties.IsToolBar = False
+    object edtPassWord: TSkinFMXEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Align = Client
+      TabOrder = 0
+      Margins.Left = 100.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Size.Width = 220.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      TextPrompt = #35831#36755#20837#23494#30721
+      StyledSettings = [Family, Style, FontColor]
+      ParentMouseEvent = False
+      ComponentTypeUseKind = ctukDefault
+      MaterialUseKind = mukRef
+      KeepSelfOwnMaterial = True
+      SelfOwnMaterial.DrawHelpTextParam.FontColor = claGray
+      SelfOwnMaterial.DrawHelpTextParam.DrawFont.Color = claGray
+      SelfOwnMaterial.DrawHelpTextParam.DrawFont.FontColor.Color = claGray
+      RefMaterial = DataModule1.edtHelpTextMaterial
+      ContentMarginsLeft = 0
+      ContentMarginsTop = 0
+      ContentMarginsRight = 0
+      ContentMarginsBottom = 0
+      IsUseDefaultStyle = False
+      EditProperties.IsDrawHelpWhenFocused = False
+      Properties.IsDrawHelpWhenFocused = False
+      IsInScrollBox = False
+      object ClearEditButton2: TClearEditButton
+        CanFocus = False
+        Cursor = crArrow
+        Size.Width = 28.000000000000000000
+        Size.Height = 36.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+      end
+    end
+  end
+end

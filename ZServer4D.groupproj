@@ -9,7 +9,7 @@
         <Projects Include="Client\VirtualAuth_Client.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="FMXClient\MyAPP.dproj">
+        <Projects Include="FMXClient\FMXClient.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -38,23 +38,23 @@
     <Target Name="VirtualAuth_Client:Make">
         <MSBuild Projects="Client\VirtualAuth_Client.dproj" Targets="Make"/>
     </Target>
-    <Target Name="MyAPP">
-        <MSBuild Projects="FMXClient\MyAPP.dproj"/>
+    <Target Name="FMXClient">
+        <MSBuild Projects="FMXClient\FMXClient.dproj"/>
     </Target>
-    <Target Name="MyAPP:Clean">
-        <MSBuild Projects="FMXClient\MyAPP.dproj" Targets="Clean"/>
+    <Target Name="FMXClient:Clean">
+        <MSBuild Projects="FMXClient\FMXClient.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="MyAPP:Make">
-        <MSBuild Projects="FMXClient\MyAPP.dproj" Targets="Make"/>
+    <Target Name="FMXClient:Make">
+        <MSBuild Projects="FMXClient\FMXClient.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="MyServer;VirtualAuth_Client;MyAPP"/>
+        <CallTarget Targets="MyServer;VirtualAuth_Client;FMXClient"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="MyServer:Clean;VirtualAuth_Client:Clean;MyAPP:Clean"/>
+        <CallTarget Targets="MyServer:Clean;VirtualAuth_Client:Clean;FMXClient:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="MyServer:Make;VirtualAuth_Client:Make;MyAPP:Make"/>
+        <CallTarget Targets="MyServer:Make;VirtualAuth_Client:Make;FMXClient:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
