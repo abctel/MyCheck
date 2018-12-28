@@ -3,8 +3,7 @@ unit Templet_Frame;
 interface
 
 uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes,
-  System.Variants,
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   // --------OrangUI-----------
   uFuncCommon, uUIFunction, uSkinFireMonkeyControl, uSkinPanelType,
@@ -12,7 +11,7 @@ uses
   // --------ZServer4D---------
 
   // --------其它单元---------
-  DB_Module, uSkinButtonType, uSkinFireMonkeyButton;
+  uSkinButtonType, uSkinFireMonkeyButton;
 
 type
   TFrameTemplet = class(TFrame)
@@ -30,6 +29,9 @@ var
 
 implementation
 
+uses
+  DB_Module;
 {$R *.fmx}
 
 end.
+

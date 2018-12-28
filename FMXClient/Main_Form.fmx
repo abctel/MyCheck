@@ -9,10 +9,4 @@ object FrmMain: TFrmMain
   FormFactor.Devices = [Desktop]
   OnShow = FormShow
   DesignerMasterStyle = 0
-  object Timer1: TTimer
-    Interval = 100
-    OnTimer = Timer1Timer
-    Left = 120
-    Top = 128
-  end
 end

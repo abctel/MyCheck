@@ -31,6 +31,8 @@ object FrameTemplet: TFrameTemplet
       Properties.AutoSize = False
       Properties.IsAutoPush = False
       Properties.IsPushed = False
+      Properties.Icon.IsClipRound = False
+      Properties.PushedIcon.IsClipRound = False
       Properties.ButtonIndex = -1
       Properties.PushedGroupIndex = 0
     end
