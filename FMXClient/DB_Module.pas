@@ -5,14 +5,16 @@ interface
 uses
   System.SysUtils, System.Classes,
   // --------OrangUI自选-----------
-  //uFuncCommon, uUIFunction,
+  // uFuncCommon, uUIFunction,
 
   // --------ZServer4D---------
   DoStatusIO, DataFrameEngine, CommunicationFramework,
+  CoreClasses,Cadencer,
   CommunicationFramework_Client_CrossSocket,
+  CommunicationFramework_Client_ICS, CommunicationFramework_Client_Indy,
   CommunicationFrameworkDoubleTunnelIO_VirtualAuth,
   // --------其它单元---------
-  //Login_Frame,
+  // Login_Frame,
   // --------三方控件单元---------
   uSkinScrollControlType, uSkinScrollBoxType, uSkinLabelType, uSkinEditType,
   uSkinPanelType, uSkinMaterial, uSkinButtonType;
@@ -33,11 +35,11 @@ type
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
-    RecvTunnel: TCommunicationFramework_Client_CrossSocket;
-    SendTunnel: TCommunicationFramework_Client_CrossSocket;
-    procedure DoStatusNear(AText: string; const ID: Integer);
+
   public
     { Public declarations }
+    RecvTunnel: TCommunicationFramework_Client_CrossSocket;
+    SendTunnel: TCommunicationFramework_Client_CrossSocket;
     Client: TCommunicationFramework_DoubleTunnelClient_VirtualAuth;
   end;
 
@@ -51,20 +53,50 @@ implementation
 
 procedure TDBM.DataModuleCreate(Sender: TObject);
 begin
-  AddDoStatusHook(Self, DoStatusNear);
-
   RecvTunnel := TCommunicationFramework_Client_CrossSocket.Create;
   SendTunnel := TCommunicationFramework_Client_CrossSocket.Create;
 
   Client := TCommunicationFramework_DoubleTunnelClient_VirtualAuth.Create(RecvTunnel, SendTunnel);
 
-  RecvTunnel.Connect('127.0.0.1', 9816);
-  SendTunnel.Connect('127.0.0.1', 9815);
-end;
+  Client.RegisterCommand;
 
-procedure TDBM.DoStatusNear(AText: string; const ID: Integer);
-begin
-  //GlobalLoginFrame.Memo1.lines.add(AText);
+  client.AsyncConnectP('127.0.0.1', 9816, 9815,
+    procedure(const cState: Boolean)
+    begin
+      if cState then
+        begin
+          // 嵌套式匿名函数支持
+          client.UserLoginP('test', 'test',
+            procedure(const lState: Boolean)
+            begin
+              if lState then
+                begin
+                  client.TunnelLinkP(
+                    procedure(const tState: Boolean)
+                    begin
+                      if tState then
+                          DoStatus('double tunnel link success!')
+                      else
+                          DoStatus('double tunnel link failed!');
+                    end)
+                end
+              else
+                begin
+                  if lState then
+                      DoStatus('login success!')
+                  else
+                      DoStatus('login failed!');
+                end;
+            end);
+        end
+      else
+        begin
+          if cState then
+              DoStatus('connected success!')
+          else
+              DoStatus('connected failed!');
+        end;
+    end);
 end;
 
 end.

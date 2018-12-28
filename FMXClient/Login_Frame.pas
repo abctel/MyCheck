@@ -50,15 +50,64 @@ begin
     TThread.Sleep(10);
     DBM.Client.Progress;
   end;
-
-    if DBM.Client.Connected then
+  if DBM.Client.Connected then
   begin
-    if DBM.Client.UserLogin('abctel', '53335641') then
-      ShowMessageBoxFrame(GlobalLoginFrame, '登录成功', '', TMsgDlgType.mtInformation, ['确定'], nil)
-    else
-      ShowMessageBoxFrame(GlobalLoginFrame, '登录失败', '', TMsgDlgType.mtInformation, ['确定'], nil);
-
+      // 嵌套式匿名函数支持
+    DBM.Client.UserLoginP(edtUserName.Text, edtPassWord.Text,
+      procedure(const State: Boolean)
+      begin
+        if State then
+          DBM.Client.TunnelLinkP(
+            procedure(const State: Boolean)
+            begin
+              DoStatus('double tunnel link success!');
+            end)
+      end);
   end;
+//  if DBM.Client.Connected then
+//  begin
+////    if DBM.Client.UserLogin('abctel', '53335641') then
+//
+////    DBM.Client.UserLoginP('abctel', '53335641',
+////      procedure(const cState: Boolean)
+////      begin
+////        if cState then
+////        begin
+////
+////          DBM.Client.TunnelLinkP(
+////            procedure(const sState: Boolean)
+////            begin
+////              if sState then
+////              begin
+////                ShowMessageBoxFrame(GlobalLoginFrame, '登录成功', '', TMsgDlgType.mtInformation, ['确定'], nil);
+////              end
+////              else
+////              begin
+////                ShowMessageBoxFrame(GlobalLoginFrame, '网络错误，请检查网络后重新再试！', '', TMsgDlgType.mtInformation, ['确定'], nil);
+////                Exit;
+////              end;
+////            end);
+////        end
+////        else
+////        begin
+////        if cState then
+////        begin
+////           ShowMessageBoxFrame(GlobalLoginFrame, '登录成功', '', TMsgDlgType.mtInformation, ['确定'], nil);
+////        end;
+////          ShowMessageBoxFrame(GlobalLoginFrame, '账号或密码错误，请重新再试！', '', TMsgDlgType.mtInformation, ['确定'], nil);
+////          Exit;
+////        end;
+////      end);
+//
+//
+//        // 嵌套式匿名函数支持
+//
+//  end
+//  else
+//  begin
+//    ShowMessageBoxFrame(GlobalLoginFrame, '网络错误，请检查网络后重新再试！', '', TMsgDlgType.mtInformation, ['确定'], nil);
+//    Exit;
+//  end;
 
 end;
 
