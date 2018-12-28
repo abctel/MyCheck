@@ -1,25 +1,38 @@
-object DataModule1: TDataModule1
+object DBM: TDBM
   OldCreateOrder = False
+  OnCreate = DataModuleCreate
   Height = 582
   Width = 696
   object bdmReturnButton: TSkinButtonDefaultMaterial
     BackColor.IsFill = True
+    IsAutoCenterIconAndCaption = False
+    DrawDetailParam.FontTrimming = fttNone
+    DrawDetailParam.FontHorzAlign = fhaLeft
     DrawDetailParam.FontVertAlign = fvaBottom
+    DrawDetail1Param.FontTrimming = fttNone
+    DrawDetail1Param.FontHorzAlign = fhaLeft
+    DrawDetail1Param.FontVertAlign = fvaTop
     DrawHelpTextParam.FontColor = claGray
     DrawHelpTextParam.DrawFont.Color = claGray
     DrawHelpTextParam.DrawFont.FontColor.Color = claGray
+    DrawHelpTextParam.FontTrimming = fttNone
+    DrawHelpTextParam.FontHorzAlign = fhaLeft
+    DrawHelpTextParam.FontVertAlign = fvaTop
     DrawIconParam.DrawEffectSetting.MouseDownEffect.CommonEffectTypes = [dpcetOffsetChange, dpcetAlphaChange]
     DrawCaptionParam.FontSize = 18.000000000000000000
     DrawCaptionParam.FontColor = claWhite
     DrawCaptionParam.DrawFont.Size = 18.000000000000000000
     DrawCaptionParam.DrawFont.Color = claWhite
     DrawCaptionParam.DrawFont.FontColor.Color = claWhite
+    DrawCaptionParam.FontTrimming = fttNone
+    DrawCaptionParam.FontHorzAlign = fhaLeft
     DrawCaptionParam.FontVertAlign = fvaCenter
     DrawCaptionParam.DrawRectSetting.Left = 36.000000000000000000
     DrawCaptionParam.DrawRectSetting.Enabled = True
     DrawCaptionParam.DrawRectSetting.SizeType = dpstPixel
     DrawCaptionParam.DrawEffectSetting.MouseDownEffect.CommonEffectTypes = [dpcetOffsetChange, dpcetAlphaChange]
     DrawCaptionParam.DrawEffectSetting.MouseDownEffect.FontColor.Color = claGray
+    NormalPicture.IsClipRound = False
     NormalPicture.ImageIndex = 0
     NormalPicture.PNG = {
       89504E470D0A1A0A0000000D494844520000001B0000002D08060000005FF710
@@ -32,7 +45,12 @@ object DataModule1: TDataModule1
       CA834D06D8E81477AB59A132C6F2348578C3259A0A3F4785E27C837081965C78
       8E3A150AA042715E08734669680A711E334A431062AB1D6A0E9FE5B522813137
       0E45FA763D5C8BA80000000049454E44AE426082}
+    HoverPicture.IsClipRound = False
+    DownPicture.IsClipRound = False
     DownPicture.ImageIndex = 1
+    DisabledPicture.IsClipRound = False
+    FocusedPicture.IsClipRound = False
+    PushedPicture.IsClipRound = False
     DrawPictureParam.IsAutoFit = True
     DrawPictureParam.PictureVertAlign = pvaCenter
     DrawPictureParam.DrawRectSetting.Left = 16.000000000000000000
@@ -60,16 +78,26 @@ object DataModule1: TDataModule1
     DrawCaptionParam.DrawFont.Size = 16.000000000000000000
     DrawCaptionParam.DrawFont.Color = claWhite
     DrawCaptionParam.DrawFont.FontColor.Color = claWhite
+    DrawCaptionParam.FontTrimming = fttNone
     DrawCaptionParam.FontHorzAlign = fhaCenter
     DrawCaptionParam.FontVertAlign = fvaCenter
     Left = 88
     Top = 456
   end
   object edtHelpTextMaterial: TSkinEditDefaultMaterial
+    NormalPicture.IsClipRound = False
+    HoverPicture.IsClipRound = False
+    FocusedPicture.IsClipRound = False
+    DisabledPicture.IsClipRound = False
     DrawHelpTextParam.FontColor = claGray
     DrawHelpTextParam.DrawFont.Color = claGray
     DrawHelpTextParam.DrawFont.FontColor.Color = claGray
+    DrawHelpTextParam.FontTrimming = fttNone
+    DrawHelpTextParam.FontHorzAlign = fhaLeft
     DrawHelpTextParam.FontVertAlign = fvaCenter
+    DrawTextParam.FontTrimming = fttNone
+    DrawTextParam.FontHorzAlign = fhaLeft
+    DrawTextParam.FontVertAlign = fvaTop
     Left = 8
     Top = 416
   end
@@ -80,6 +108,8 @@ object DataModule1: TDataModule1
     IsTransparent = False
     DrawCaptionParam.FontSize = 15.000000000000000000
     DrawCaptionParam.DrawFont.Size = 15.000000000000000000
+    DrawCaptionParam.FontTrimming = fttNone
+    DrawCaptionParam.FontHorzAlign = fhaLeft
     DrawCaptionParam.FontVertAlign = fvaCenter
     DrawCaptionParam.DrawRectSetting.Left = 40.000000000000000000
     DrawCaptionParam.DrawRectSetting.Enabled = True
@@ -93,16 +123,33 @@ object DataModule1: TDataModule1
     BackColor.IsRound = True
     BackColor.DrawEffectSetting.MouseDownEffect.CommonEffectTypes = [dpcetAlphaChange]
     IsTransparent = False
+    IsAutoCenterIconAndCaption = False
+    DrawDetailParam.FontTrimming = fttNone
+    DrawDetailParam.FontHorzAlign = fhaLeft
+    DrawDetailParam.FontVertAlign = fvaTop
+    DrawDetail1Param.FontTrimming = fttNone
+    DrawDetail1Param.FontHorzAlign = fhaLeft
+    DrawDetail1Param.FontVertAlign = fvaTop
     DrawHelpTextParam.FontColor = claGray
     DrawHelpTextParam.DrawFont.Color = claGray
     DrawHelpTextParam.DrawFont.FontColor.Color = claGray
+    DrawHelpTextParam.FontTrimming = fttNone
+    DrawHelpTextParam.FontHorzAlign = fhaLeft
+    DrawHelpTextParam.FontVertAlign = fvaTop
     DrawCaptionParam.FontSize = 15.000000000000000000
     DrawCaptionParam.FontColor = claWhite
     DrawCaptionParam.DrawFont.Size = 15.000000000000000000
     DrawCaptionParam.DrawFont.Color = claWhite
     DrawCaptionParam.DrawFont.FontColor.Color = claWhite
+    DrawCaptionParam.FontTrimming = fttNone
     DrawCaptionParam.FontHorzAlign = fhaCenter
     DrawCaptionParam.FontVertAlign = fvaCenter
+    NormalPicture.IsClipRound = False
+    HoverPicture.IsClipRound = False
+    DownPicture.IsClipRound = False
+    DisabledPicture.IsClipRound = False
+    FocusedPicture.IsClipRound = False
+    PushedPicture.IsClipRound = False
     Left = 128
     Top = 496
   end
@@ -110,6 +157,8 @@ object DataModule1: TDataModule1
     DrawCaptionParam.FontColor = xFF007AFF
     DrawCaptionParam.DrawFont.Color = xFF007AFF
     DrawCaptionParam.DrawFont.FontColor.Color = xFF007AFF
+    DrawCaptionParam.FontTrimming = fttNone
+    DrawCaptionParam.FontHorzAlign = fhaLeft
     DrawCaptionParam.FontVertAlign = fvaCenter
     Left = 48
     Top = 376
@@ -119,6 +168,10 @@ object DataModule1: TDataModule1
     BackColor.FillColor.Color = claWhitesmoke
     IsTransparent = False
     PullDownRefreshPanelMaterial.IndicatorColor = claBlack
+    PullDownRefreshPanelMaterial.LoadingPicture.IsClipRound = False
+    PullDownRefreshPanelMaterial.DrawLoadingCaptionParam.FontTrimming = fttNone
+    PullDownRefreshPanelMaterial.DrawLoadingCaptionParam.FontHorzAlign = fhaLeft
+    PullDownRefreshPanelMaterial.DrawLoadingCaptionParam.FontVertAlign = fvaTop
     PullDownRefreshPanelMaterial.EnableAutoCenterPosition = False
     PullDownRefreshPanelMaterial.EnableLoadingImageBiggerEffect = False
     PullDownRefreshPanelMaterial.EnableLoadingImageRotateEffect = True
@@ -126,6 +179,10 @@ object DataModule1: TDataModule1
     PullDownRefreshPanelMaterial.DecidedLoadCaption = #26494#24320#21047#26032
     PullDownRefreshPanelMaterial.UnDecidedLoadCaption = #19979#25289#21047#26032
     PullUpLoadMorePanelMaterial.IndicatorColor = claBlack
+    PullUpLoadMorePanelMaterial.LoadingPicture.IsClipRound = False
+    PullUpLoadMorePanelMaterial.DrawLoadingCaptionParam.FontTrimming = fttNone
+    PullUpLoadMorePanelMaterial.DrawLoadingCaptionParam.FontHorzAlign = fhaLeft
+    PullUpLoadMorePanelMaterial.DrawLoadingCaptionParam.FontVertAlign = fvaTop
     PullUpLoadMorePanelMaterial.EnableAutoCenterPosition = False
     PullUpLoadMorePanelMaterial.EnableLoadingImageBiggerEffect = False
     PullUpLoadMorePanelMaterial.EnableLoadingImageRotateEffect = True
@@ -141,16 +198,33 @@ object DataModule1: TDataModule1
     BackColor.IsRound = True
     BackColor.DrawEffectSetting.MouseDownEffect.CommonEffectTypes = [dpcetAlphaChange]
     IsTransparent = False
+    IsAutoCenterIconAndCaption = False
+    DrawDetailParam.FontTrimming = fttNone
+    DrawDetailParam.FontHorzAlign = fhaLeft
+    DrawDetailParam.FontVertAlign = fvaTop
+    DrawDetail1Param.FontTrimming = fttNone
+    DrawDetail1Param.FontHorzAlign = fhaLeft
+    DrawDetail1Param.FontVertAlign = fvaTop
     DrawHelpTextParam.FontColor = claGray
     DrawHelpTextParam.DrawFont.Color = claGray
     DrawHelpTextParam.DrawFont.FontColor.Color = claGray
+    DrawHelpTextParam.FontTrimming = fttNone
+    DrawHelpTextParam.FontHorzAlign = fhaLeft
+    DrawHelpTextParam.FontVertAlign = fvaTop
     DrawCaptionParam.FontSize = 15.000000000000000000
     DrawCaptionParam.FontColor = claWhite
     DrawCaptionParam.DrawFont.Size = 15.000000000000000000
     DrawCaptionParam.DrawFont.Color = claWhite
     DrawCaptionParam.DrawFont.FontColor.Color = claWhite
+    DrawCaptionParam.FontTrimming = fttNone
     DrawCaptionParam.FontHorzAlign = fhaCenter
     DrawCaptionParam.FontVertAlign = fvaCenter
+    NormalPicture.IsClipRound = False
+    HoverPicture.IsClipRound = False
+    DownPicture.IsClipRound = False
+    DisabledPicture.IsClipRound = False
+    FocusedPicture.IsClipRound = False
+    PushedPicture.IsClipRound = False
     Left = 48
     Top = 496
   end
@@ -162,6 +236,8 @@ object DataModule1: TDataModule1
     IsTransparent = False
     DrawCaptionParam.FontSize = 14.000000000000000000
     DrawCaptionParam.DrawFont.Size = 14.000000000000000000
+    DrawCaptionParam.FontTrimming = fttNone
+    DrawCaptionParam.FontHorzAlign = fhaLeft
     DrawCaptionParam.FontVertAlign = fvaCenter
     DrawCaptionParam.DrawRectSetting.Left = 10.000000000000000000
     DrawCaptionParam.DrawRectSetting.Enabled = True
@@ -173,22 +249,48 @@ object DataModule1: TDataModule1
     BackColor.BorderColor.Color = xFF438DF5
     BackColor.BorderWidth = 1.000000000000000000
     IsTransparent = False
+    IsAutoCenterIconAndCaption = False
+    DrawDetailParam.FontTrimming = fttNone
+    DrawDetailParam.FontHorzAlign = fhaLeft
+    DrawDetailParam.FontVertAlign = fvaTop
+    DrawDetail1Param.FontTrimming = fttNone
+    DrawDetail1Param.FontHorzAlign = fhaLeft
+    DrawDetail1Param.FontVertAlign = fvaTop
     DrawHelpTextParam.FontColor = claGray
     DrawHelpTextParam.DrawFont.Color = claGray
     DrawHelpTextParam.DrawFont.FontColor.Color = claGray
+    DrawHelpTextParam.FontTrimming = fttNone
+    DrawHelpTextParam.FontHorzAlign = fhaLeft
+    DrawHelpTextParam.FontVertAlign = fvaTop
     DrawCaptionParam.FontColor = xFF438DF5
     DrawCaptionParam.DrawFont.Color = xFF438DF5
     DrawCaptionParam.DrawFont.FontColor.Color = xFF438DF5
+    DrawCaptionParam.FontTrimming = fttNone
     DrawCaptionParam.FontHorzAlign = fhaCenter
     DrawCaptionParam.FontVertAlign = fvaCenter
+    NormalPicture.IsClipRound = False
+    HoverPicture.IsClipRound = False
+    DownPicture.IsClipRound = False
+    DisabledPicture.IsClipRound = False
+    FocusedPicture.IsClipRound = False
+    PushedPicture.IsClipRound = False
     Left = 8
     Top = 496
   end
   object edtInputEditHasHelpTextMaterial: TSkinEditDefaultMaterial
+    NormalPicture.IsClipRound = False
+    HoverPicture.IsClipRound = False
+    FocusedPicture.IsClipRound = False
+    DisabledPicture.IsClipRound = False
     DrawHelpTextParam.FontColor = claGray
     DrawHelpTextParam.DrawFont.Color = claGray
     DrawHelpTextParam.DrawFont.FontColor.Color = claGray
+    DrawHelpTextParam.FontTrimming = fttNone
+    DrawHelpTextParam.FontHorzAlign = fhaLeft
     DrawHelpTextParam.FontVertAlign = fvaCenter
+    DrawTextParam.FontTrimming = fttNone
+    DrawTextParam.FontHorzAlign = fhaLeft
+    DrawTextParam.FontVertAlign = fvaTop
     Left = 48
     Top = 416
   end

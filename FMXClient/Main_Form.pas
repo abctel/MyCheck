@@ -3,15 +3,15 @@ unit Main_Form;
 interface
 
 uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  System.SysUtils, System.Types, System.UITypes, System.Classes,
+  System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
-  //--------OrangUI-----------
+  // --------OrangUI-----------
   uFuncCommon, uUIFunction,
-  //--------ZServer4D---------
+  // --------ZServer4D---------
 
-  //--------其它单元---------
-  Login_Frame
-  ;
+  // --------其它单元---------
+  Login_Frame,DB_Module;
 
 type
   TFrmMain = class(TForm)
@@ -31,8 +31,10 @@ implementation
 
 procedure TFrmMain.FormShow(Sender: TObject);
 begin
-   ShowFrame(TFrame(GlobalLoginFrame),TFrameLogin,FrmMain,nil,nil,nil,Application,True,True,ufsefNone);
-   GlobalLoginFrame.FrameHistroy:=CurrentFrameHistroy;
+  ShowFrame(TFrame(GlobalLoginFrame), TFrameLogin, FrmMain, nil, nil, nil,
+    Application, True, True, ufsefNone);
+  GlobalLoginFrame.FrameHistroy := CurrentFrameHistroy;
+  DBM:=TDBM.Create(Self);
 end;
 
 end.
