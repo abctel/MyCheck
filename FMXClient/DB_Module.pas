@@ -51,7 +51,7 @@ var
 implementation
 
 uses
-  Login_Frame;
+  Login_Frame, ClientDefine;
 
 {%CLASSGROUP 'FMX.Controls.TControl'}
 {$R *.dfm}

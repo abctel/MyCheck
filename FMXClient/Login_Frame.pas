@@ -15,22 +15,26 @@ uses
   // --------三方控件单元---------
   uSkinButtonType, uSkinFireMonkeyButton, FMX.Controls.Presentation, FMX.Edit,
   uSkinFireMonkeyEdit, FMX.ScrollBox, FMX.Memo, uSkinFireMonkeyControl,
-  uSkinPanelType, uSkinFireMonkeyPanel;
+  uSkinPanelType, uSkinFireMonkeyPanel, uSkinImageType, uSkinFireMonkeyImage;
 
 type
   TFrameLogin = class(TFrame)
     pnlToolBar: TSkinFMXPanel;
     edtUserName: TSkinFMXEdit;
     edtPassWord: TSkinFMXEdit;
-    SkinFMXButton1: TSkinFMXButton;
-    SkinFMXPanel1: TSkinFMXPanel;
-    SkinFMXPanel2: TSkinFMXPanel;
+    btnLogin: TSkinFMXButton;
+    pnlUserName: TSkinFMXPanel;
+    pnlPassWord: TSkinFMXPanel;
     ClearEditButton1: TClearEditButton;
     ClearEditButton2: TClearEditButton;
     Memo1: TMemo;
-    procedure SkinFMXButton1Click(Sender: TObject);
+    pnlLogo: TSkinFMXPanel;
+    edtLogo: TSkinFMXEdit;
+    imgLogo: TSkinFMXImage;
+    procedure btnLoginClick(Sender: TObject);
   private
     { Private declarations }
+    procedure UserLogin;
   public
     { Public declarations }
     FrameHistroy: TFrameHistroy;
@@ -42,22 +46,39 @@ var
 implementation
 
 uses
-  Main_Form;
+  Main_Form, ClientDefine;
 
 {$R *.fmx}
 
-procedure TFrameLogin.SkinFMXButton1Click(Sender: TObject);
+procedure TFrameLogin.btnLoginClick(Sender: TObject);
+begin
+  if edtUserName.Text = '' then
+  begin
+  ShowMessageBoxFrame(FrmMain, '登录失败', '账号为空，请输入您的账号！', TMsgDlgType.mtError, ['确定'], nil);
+  Exit;
+  end;
+    if edtPassWord.Text = '' then
+  begin
+  ShowMessageBoxFrame(FrmMain, '登录失败', '密码为空，请输入您的账号！', TMsgDlgType.mtError, ['确定'], nil);
+  end else
+  begin
+  UserLogin;
+  end;
+
+end;
+
+procedure TFrameLogin.UserLogin;
 begin
 //显示等待状态
   ShowWaitingFrame(Self, '登录中...');
   // 异步连接服务端
-  DBM.Client.AsyncConnectP('127.0.0.1', 9816, 9815,
+  DBM.Client.AsyncConnectP(HostIP, RecvPort, SendPort,
     procedure(const cState: Boolean)
     begin
       if cState then
       begin
         // 异步登录操作
-        DBM.Client.UserLoginP('abctel', '53335641',
+        DBM.Client.UserLoginP(edtUserName.Text, edtPassWord.Text,
           procedure(const cState: Boolean)
           begin
             if cState then
@@ -76,7 +97,7 @@ begin
 
                     //进入主界面
                     HideFrame(Self, hfcttBeforeReturnFrame);
-                    ShowFrame(TFrame(GlobalMainFrame), TFrameMain, FrmMain, nil, nil, nil, Application, True, True, ufsefNone);
+                    ShowFrame(TFrame(GlobalMainFrame), TFrameMain, FrmMain, nil, nil, nil, Application, True, True, ufsefDefault);
                     GlobalMainFrame.FrameHistroy := CurrentFrameHistroy;
                   end
                   else
