@@ -18,6 +18,7 @@ uses
 
 type
   TFrmMain = class(TForm)
+    procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
@@ -33,6 +34,12 @@ implementation
 uses
 Login_Frame, DB_Module;
 {$R *.fmx}
+
+procedure TFrmMain.FormDestroy(Sender: TObject);
+begin
+  DBM.Destroy;
+
+end;
 
 procedure TFrmMain.FormShow(Sender: TObject);
 begin

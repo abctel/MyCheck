@@ -7,6 +7,7 @@ object FrmMain: TFrmMain
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  OnDestroy = FormDestroy
   OnShow = FormShow
   DesignerMasterStyle = 0
 end

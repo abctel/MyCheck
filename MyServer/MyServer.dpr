@@ -179,6 +179,7 @@ var
 SQL:string;
 begin
   inherited UserLoginSuccess(UserDefineIO);
+  //更新登陆时间或者返回人信息
   SQL:='UPDATE auth_user SET Login_Count = Login_Count + 1 , Login_Time = NOW() WHERE Login_Name = '''+UserDefineIO.UserID+'''';
   MyExec(SQL);
   DoStatus(SQL);

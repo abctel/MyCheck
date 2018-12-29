@@ -16,7 +16,7 @@ uses
   // Login_Frame,
   // --------三方控件单元---------
   uSkinScrollControlType, uSkinScrollBoxType, uSkinLabelType, uSkinEditType,
-  uSkinPanelType, uSkinMaterial, uSkinButtonType, FMX.Types;
+  uSkinPanelType, uSkinMaterial, uSkinButtonType, FMX.Types, Vcl.ExtCtrls;
 
 type
   TDBM = class(TDataModule)
@@ -32,6 +32,7 @@ type
     btnOrangeRedBorderWhiteBackButtonMaterial: TSkinButtonDefaultMaterial;
     edtInputEditHasHelpTextMaterial: TSkinEditDefaultMaterial;
     Timer1: TTimer;
+    procedure DataModuleDestroy(Sender: TObject);
     procedure DataModuleCreate(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
   private
@@ -54,6 +55,12 @@ uses
 
 {%CLASSGROUP 'FMX.Controls.TControl'}
 {$R *.dfm}
+
+procedure TDBM.DataModuleDestroy(Sender: TObject);
+begin
+  DisposeObject(Client);
+  DeleteDoStatusHook(self);
+end;
 
 procedure TDBM.DataModuleCreate(Sender: TObject);
 begin
