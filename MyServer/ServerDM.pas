@@ -8,7 +8,8 @@ uses
   ServerDefine,
 
   // FireDAC
-  FireDAC.Comp.Client, FireDAC.Stan.Consts, FireDAC.Stan.Def, FireDAC.Phys.MySQL,
+  FireDAC.Comp.Client, FireDAC.Stan.Consts, FireDAC.Stan.Def,
+  FireDAC.Phys.MySQL,
   FireDAC.Stan.Pool, FireDAC.Stan.Intf, FireDAC.DApt, FireDAC.Stan.Async,
   // ZServer4D
   MemoryStream64, PascalStrings, DoStatusIO;
@@ -38,7 +39,7 @@ function MyQuery(ASQL: SystemString): TMemoryStream64;
 /// 数据库执行器
 /// </summary>
 /// <param name="ASQL">需要执行的语句</param>
-procedure MyExec(ASQL:SystemString);
+procedure MyExec(ASQL: SystemString);
 
 /// <summary>
 /// 登陆查询器
@@ -85,7 +86,7 @@ begin
       DoStatus('数据库连接池创建成功')
     else
       DoStatus('数据库连接池创建失败');
-     conServer.Connected := False;
+    conServer.Connected := False;
     // 设置FDQuery连接信息
 
     conQuery.Connection := conServer;
@@ -127,9 +128,9 @@ begin
   end;
 end;
 
-procedure MyExec(ASQL:SystemString);
+procedure MyExec(ASQL: SystemString);
 begin
-    try
+  try
     with MyDM.conQuery do
     begin
       Close;
@@ -151,8 +152,15 @@ begin
     begin
       Close;
       SQL.Clear;
-      SQL.Add('SELECT `auth_user`.`Login_Name`, `auth_user`.`Login_Pass` FROM `auth_user` WHERE `auth_user`.`Login_Name` = ' + '''' + LoginName + '''' + ' AND `auth_user`.`Login_Pass` = ' + '''' + LoginPass + '''');
-      //DoStatus(SQL);
+      SQL.Add('SELECT User_Auth.ID, User_OP.OP_WaterInfo_Look, ' +
+        'User_OP.OP_WateInfo_Edit, User_Auth.Login_ID, ' +
+        'User_Auth.Login_Pass, User_Auth.Login_Name, ' +
+        'User_Auth.Login_Time, User_Auth.Reg_Time, ' +
+        'User_Auth.Login_Count FROM User_Auth ' +
+        'INNER JOIN User_OP ON User_Auth.ID = User_OP.OP_ID WHERE ' +
+        'User_Auth.Login_ID = ' + '''' + LoginName + '''' + ' AND ' +
+        'User_Auth.Login_Pass = ' + '''' + LoginPass + '''' + '');
+       //DoStatus(SQL);
       Open;
       if RecordCount > 0 then
       begin
@@ -171,4 +179,3 @@ begin
 end;
 
 end.
-

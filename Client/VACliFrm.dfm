@@ -177,8 +177,8 @@ object AuthDoubleTunnelClientForm: TAuthDoubleTunnelClientForm
   end
   object DataSource1: TDataSource
     DataSet = FDMemTable1
-    Left = 568
-    Top = 432
+    Left = 648
+    Top = 296
   end
   object FDMemTable1: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -188,11 +188,36 @@ object AuthDoubleTunnelClientForm: TAuthDoubleTunnelClientForm
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 480
-    Top = 440
+    Left = 584
+    Top = 296
   end
   object FDStanStorageBinLink1: TFDStanStorageBinLink
-    Left = 552
-    Top = 472
+    Left = 584
+    Top = 344
+  end
+  object con1: TFDConnection
+    Params.Strings = (
+      'Database=MyCheck'
+      'User_Name=MyCheck'
+      'Password=5333564Zyl'
+      'Server=chuanqi.i066.com'
+      'DriverID=MySQL')
+    Connected = True
+    LoginPrompt = False
+    Left = 472
+    Top = 448
+  end
+  object fdqry1: TFDQuery
+    Connection = con1
+    SQL.Strings = (
+      
+        'UPDATE User SET Login_Count = Login_Count + 1 , Login_Time = NOW' +
+        '() WHERE Login_Name = '#39'abctel'#39)
+    Left = 544
+    Top = 448
+  end
+  object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink
+    Left = 584
+    Top = 392
   end
 end

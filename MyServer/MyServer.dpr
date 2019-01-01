@@ -69,10 +69,13 @@ type
     procedure UnRegisterCommand; override;
   end;
 
+var
+  MySrv: TMyServer;
+
 procedure RunServer;
 var
   RecvTunnel, SendTunnel: TCommunicationFrameworkServer;
-  MyServer: TMyServer;
+  //MyServer: TMyServer;
 begin
   DoStatus(TOSVersion.ToString);
   // 初始化数据库服务
@@ -82,7 +85,7 @@ begin
   SendTunnel := TCommunicationFramework_Server_CrossSocket.Create;
 
   // 通讯框架绑定端口
-  MyServer := TMyServer.Create(RecvTunnel, SendTunnel);
+  MySrv := TMyServer.Create(RecvTunnel, SendTunnel);
 
   // 接收、发送通道端口绑定并确认监听地址工作模式
   if RecvTunnel.StartService(HostIP, RecvPort) then
@@ -96,16 +99,16 @@ begin
     DoStatus('监听 SendTunnel 地址 %s 的端口：' + SendPort.ToString + ' 失败', [TranslateBindAddr(HostIP)]);
 
   // 取消监听器注册
-  MyServer.UnRegisterCommand;
+  MySrv.UnRegisterCommand;
   // 监听器注册
-  MyServer.RegisterCommand;
+  MySrv.RegisterCommand;
 
   try
     // 重要：服务线程刷新
     while True do
     begin
-      MyServer.Progress;
-      if MyServer.RecvTunnel.Count > 0 then
+      MySrv.Progress;
+      if MySrv.RecvTunnel.Count > 0 then
         CoreClasses.CheckThreadSynchronize
       else
         CoreClasses.CheckThreadSynchronize(10);
@@ -153,10 +156,14 @@ begin
 end;
 
 procedure TMyServer.UserAuth(Sender: TVirtualAuthIO);
+var
+Myss:TMemoryStream64;
 begin
   inherited UserAuth(Sender);
   if AuthQuery(Sender.UserID, Sender.Passwd) then
   begin
+    //SendTunnel.SendBigStream(Sender.UserDefineIO, '');
+    MySrv.SendTunnel.SendDirectStreamCmd('dell',Myss);
     Sender.Accept;
     DoStatus(Sender.UserID + '登录成功');
   end
@@ -175,17 +182,16 @@ end;
 
 procedure TMyServer.UserLoginSuccess(UserDefineIO: TPeerClientUserDefineForRecvTunnel_VirtualAuth);
 var
-SQL:string;
+  SQL: string;
 begin
   inherited UserLoginSuccess(UserDefineIO);
-  //更新登陆时间或者返回人信息
-  SQL:='UPDATE auth_user SET Login_Count = Login_Count + 1 , Login_Time = NOW() WHERE Login_Name = '''+UserDefineIO.UserID+'''';
+  // 更新登陆时间或者返回人信息
+  SQL := 'UPDATE User_Auth SET User_Auth.Login_Count = User_Auth.Login_Count + 1 , User_Auth.Login_Time = NOW() WHERE User_Auth.Login_ID = ''' + UserDefineIO.UserID + '''';
   MyExec(SQL);
   DoStatus(SQL);
 end;
 
 procedure TMyServer.UserOut(UserDefineIO: TPeerClientUserDefineForRecvTunnel_VirtualAuth);
-
 begin
   inherited UserOut(UserDefineIO);
 

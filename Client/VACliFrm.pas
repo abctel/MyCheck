@@ -16,7 +16,9 @@ uses
   Datasnap.DBClient, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error,
   FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, FireDAC.Stan.StorageBin;
+  FireDAC.Comp.Client, FireDAC.Stan.StorageBin, FireDAC.UI.Intf,
+  FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
+  FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, FireDAC.DApt;
 
 type
   TAuthDoubleTunnelClientForm = class(TForm)
@@ -40,6 +42,9 @@ type
     Edit3: TEdit;
     Button3: TButton;
     Edit4: TEdit;
+    con1: TFDConnection;
+    fdqry1: TFDQuery;
+    FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink;
     procedure ConnectButtonClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
