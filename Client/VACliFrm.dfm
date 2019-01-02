@@ -201,6 +201,7 @@ object AuthDoubleTunnelClientForm: TAuthDoubleTunnelClientForm
       'User_Name=MyCheck'
       'Password=5333564Zyl'
       'Server=chuanqi.i066.com'
+      'CharacterSet=utf8mb4'
       'DriverID=MySQL')
     Connected = True
     LoginPrompt = False

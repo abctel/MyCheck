@@ -13,6 +13,7 @@ uses
   DataFrameEngine,
   CoreCipher,
   Utils.Utils,
+  NotifyObjectBase,
   CommunicationFramework,
   CommunicationFramework_Server_CrossSocket,
   CommunicationFrameworkDoubleTunnelIO,
@@ -58,6 +59,14 @@ type
     /// <param name="InData">客户端发来的信息</param>
     /// <param name="OutData">反馈给客户端的信息</param>
     procedure cmd_Stream_Result(Sender: TPeerClient; InData, OutData: TDataFrameEngine);
+    /// <summary>
+    /// 查询登陆用户个人信息
+    /// </summary>
+    /// <param name="Sender">客户端状态信息</param>
+    /// <param name="InData">客户端发来的信息</param>
+    /// <param name="OutData">反馈给客户端的信息</param>
+    procedure cmd_QueryLoginUserInfo(Sender: TPeerClient; InData, OutData: TDataFrameEngine);
+  private
   public
     /// <summary>
     /// 注册通讯器
@@ -75,7 +84,7 @@ var
 procedure RunServer;
 var
   RecvTunnel, SendTunnel: TCommunicationFrameworkServer;
-  //MyServer: TMyServer;
+  // MyServer: TMyServer;
 begin
   DoStatus(TOSVersion.ToString);
   // 初始化数据库服务
@@ -126,17 +135,54 @@ end;
 procedure TMyServer.cmd_Console(Sender: TPeerClient; InData: SystemString);
 begin
   DoStatus(InData);
+  // InData.
+end;
+
+procedure TMyServer.cmd_QueryLoginUserInfo(Sender: TPeerClient; InData, OutData: TDataFrameEngine);
+var
+  tempStm: TMemoryStream64;
+begin
+  tempStm := TMemoryStream64.Create;
+  tempStm.Position := 0;
+  tempStm := MyQuery('SELECT User_Auth.Login_Name, User_OP.OP_WaterInfo_Look, User_OP.OP_WateInfo_Edit ' + 'FROM User_Auth ' + 'INNER JOIN User_OP ON User_OP.OP_ID = User_Auth.ID ' + 'WHERE User_Auth.Login_ID = ' + '''' + InData.Reader.ReadString + '''');
+  tempStm.Position := 0;
+  OutData.Reader.ReadStream(tempStm);
+  tempStm.Free;
 end;
 
 procedure TMyServer.cmd_Stream(Sender: TPeerClient; InData: TDataFrameEngine);
 begin
   DoStatus(InData.Reader.ReadString);
-
 end;
 
 procedure TMyServer.cmd_Stream_Result(Sender: TPeerClient; InData, OutData: TDataFrameEngine);
 begin
 
+end;
+
+procedure OtherServerReponse(Sender: TNPostExecute);
+var
+  AuthIO: TVirtualAuthIO;
+begin
+  AuthIO := TVirtualAuthIO(Sender.Data1);
+
+  // 在访问其他服务器的过程中，我们等待验证的用户可能已经断线，因此我们需要判断一下
+  if not AuthIO.Online then
+  begin
+    AuthIO.Bye; // TVirtualAuthIO中的bye等同于Free，如果我们不Bye，会造成内存泄漏
+    exit;
+  end;
+
+  if AuthQuery(AuthIO.UserID, AuthIO.Passwd) then
+  begin
+    AuthIO.Accept;
+    DoStatus(AuthIO.UserID + '登录成功');
+  end
+  else
+  begin
+    AuthIO.Reject;
+    DoStatus(AuthIO.UserID + '登录失败');
+  end;
 end;
 
 procedure TMyServer.RegisterCommand;
@@ -145,6 +191,7 @@ begin
   RecvTunnel.RegisterDirectConsole('cmd_Console').OnExecute := cmd_Console;
   RecvTunnel.RegisterDirectStream('cmd_Stream').OnExecute := cmd_Stream;
   RecvTunnel.RegisterStream('cmd_Stream_Result').OnExecute := cmd_Stream_Result;
+  RecvTunnel.RegisterStream('cmd_QueryLoginUserInfo').OnExecute := cmd_QueryLoginUserInfo;
 end;
 
 procedure TMyServer.UnRegisterCommand;
@@ -153,25 +200,16 @@ begin
   RecvTunnel.UnRegisted('cmd_Console');
   RecvTunnel.UnRegisted('cmd_Stream');
   RecvTunnel.UnRegisted('cmd_Stream_Result');
+  RecvTunnel.UnRegisted('cmd_QueryLoginUserInfo');
 end;
 
 procedure TMyServer.UserAuth(Sender: TVirtualAuthIO);
-var
-Myss:TMemoryStream64;
 begin
   inherited UserAuth(Sender);
-  if AuthQuery(Sender.UserID, Sender.Passwd) then
-  begin
-    //SendTunnel.SendBigStream(Sender.UserDefineIO, '');
-    MySrv.SendTunnel.SendDirectStreamCmd('dell',Myss);
-    Sender.Accept;
-    DoStatus(Sender.UserID + '登录成功');
-  end
-  else
-  begin
-    Sender.Reject;
-    DoStatus(Sender.UserID + '登录失败');
-  end;
+  // 工作模式是延迟认证，在第二种模式中，我们什么都不用做，保存TVirtualAuthIO的实例，待认远程证完成，我们再反馈给客户端
+  with ProgressEngine.PostExecuteC(3.0, OtherServerReponse) do
+    Data1 := Sender;
+
 end;
 
 procedure TMyServer.UserLinkSuccess(UserDefineIO: TPeerClientUserDefineForRecvTunnel_VirtualAuth);

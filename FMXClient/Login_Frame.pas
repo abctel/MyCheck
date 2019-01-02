@@ -11,7 +11,7 @@ uses
   // --------其它单元---------
   DB_Module, Main_Frame,
   // --------ZServer4D---------
-  DoStatusIO,
+  DoStatusIO, DataFrameEngine, CommunicationFramework,
   // --------三方控件单元---------
   uSkinButtonType, uSkinFireMonkeyButton, FMX.Controls.Presentation, FMX.Edit,
   uSkinFireMonkeyEdit, FMX.ScrollBox, FMX.Memo, uSkinFireMonkeyControl,
@@ -54,20 +54,23 @@ procedure TFrameLogin.btnLoginClick(Sender: TObject);
 begin
   if edtUserName.Text = '' then
   begin
-  ShowMessageBoxFrame(FrmMain, '登录失败', '账号为空，请输入您的账号！', TMsgDlgType.mtError, ['确定'], nil);
-  Exit;
+    ShowMessageBoxFrame(FrmMain, '登录失败', '账号为空，请输入您的账号！', TMsgDlgType.mtError, ['确定'], nil);
+    Exit;
   end;
-    if edtPassWord.Text = '' then
+  if edtPassWord.Text = '' then
   begin
-  ShowMessageBoxFrame(FrmMain, '登录失败', '密码为空，请输入您的账号！', TMsgDlgType.mtError, ['确定'], nil);
-  end else
+    ShowMessageBoxFrame(FrmMain, '登录失败', '密码为空，请输入您的账号！', TMsgDlgType.mtError, ['确定'], nil);
+  end
+  else
   begin
-  UserLogin;
+    UserLogin;
   end;
 
 end;
 
 procedure TFrameLogin.UserLogin;
+var
+  tempStm: TDataFrameEngine;
 begin
 //显示等待状态
   ShowWaitingFrame(Self, '登录中...');
@@ -89,16 +92,34 @@ begin
                 begin
                   if sState then
                   begin
-                  //隐藏等待状态
-                    HideWaitingFrame;
-                    //ShowMessageBoxFrame(FrmMain, '登录成功', '', TMsgDlgType.mtInformation, ['确定'], nil);
-                    //释放原主界面
-                    uFuncCommon.FreeAndNil(GlobalMainFrame);
+                  //获取用户资料
+                    tempStm := TDataFrameEngine.Create;
+                    tempStm.WriteString(edtUserName.Text);
+                    DBM.Client.SendTunnel.SendStreamCmdP('cmd_QueryLoginUserInfo', tempStm,
+                      procedure(Sender: TPeerIO; ResultData: TDataFrameEngine)
+                      begin
+                        DoStatus('1');
+                        DoStatus(ResultData.Reader.ReadString);
+                      end);
+                    tempStm.Free;
 
-                    //进入主界面
-                    HideFrame(Self, hfcttBeforeReturnFrame);
-                    ShowFrame(TFrame(GlobalMainFrame), TFrameMain, FrmMain, nil, nil, nil, Application, True, True, ufsefDefault);
-                    GlobalMainFrame.FrameHistroy := CurrentFrameHistroy;
+
+
+
+
+
+
+
+//                  //隐藏等待状态
+                    HideWaitingFrame;
+//                    //ShowMessageBoxFrame(FrmMain, '登录成功', '', TMsgDlgType.mtInformation, ['确定'], nil);
+//                    //释放原主界面
+//                    uFuncCommon.FreeAndNil(GlobalMainFrame);
+//
+//                    //进入主界面
+//                    HideFrame(Self, hfcttBeforeReturnFrame);
+//                    ShowFrame(TFrame(GlobalMainFrame), TFrameMain, FrmMain, nil, nil, nil, Application, True, True, ufsefDefault);
+//                    GlobalMainFrame.FrameHistroy := CurrentFrameHistroy;
                   end
                   else
                   begin
@@ -127,6 +148,7 @@ begin
       end;
 
     end);
+
 end;
 
 end.

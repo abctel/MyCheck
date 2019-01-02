@@ -8,9 +8,9 @@ uses
   ServerDefine,
 
   // FireDAC
-  FireDAC.Comp.Client, FireDAC.Stan.Consts, FireDAC.Stan.Def,
-  FireDAC.Phys.MySQL,
+  FireDAC.Comp.Client, FireDAC.Stan.Consts, FireDAC.Stan.Def, FireDAC.Phys.MySQL,
   FireDAC.Stan.Pool, FireDAC.Stan.Intf, FireDAC.DApt, FireDAC.Stan.Async,
+  FireDAC.Stan.StorageXML, FireDAC.Stan.StorageJSON, FireDAC.Stan.Storage,
   // ZServer4D
   MemoryStream64, PascalStrings, DoStatusIO;
 
@@ -20,6 +20,7 @@ type
     conQuery: TFDQuery;
     conManager: TFDManager;
     FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink;
+    FDStanStorageXMLLink1: TFDStanStorageXMLLink;
   public
     constructor Create;
     destructor destroy; override;
@@ -81,15 +82,21 @@ begin
     conServer.ConnectionDefName := ConnDefName;
 
     // 测试线程池是否创建成功
-    conServer.Connected := True;
-    if conServer.Connected then
-      DoStatus('数据库连接池创建成功')
-    else
-      DoStatus('数据库连接池创建失败');
-    conServer.Connected := False;
-    // 设置FDQuery连接信息
+    with conServer do
+    begin
+      Connected := True;
+      if Connected then
+        DoStatus('数据库连接池创建成功')
+      else
+        DoStatus('数据库连接池创建失败');
+    end;
 
-    conQuery.Connection := conServer;
+    // 设置FDQuery连接信息
+    with conQuery do
+    begin
+      Connection := conServer;
+      ResourceOptions.StoreItems := [siData, siMeta, siDelta];
+    end;
 
   except
     on E: Exception do
@@ -116,12 +123,17 @@ begin
       Close;
       SQL.Clear;
       SQL.Add(ASQL);
+      DoStatus(ASQL);
       Open;
+      DoStatus(RecordCount);
+      //Data.DataView.
       // TFDStorageFormat.sfBinary为Stream的文件格式，该方法有多种格式可选
-      SaveToStream(Result, TFDStorageFormat.sfBinary);
+      SaveToStream(Result, TFDStorageFormat.sfJSON);
       Result.Position := 0;
+      DoStatus(Result.ReadString);
       Close;
     end;
+
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);
@@ -152,15 +164,8 @@ begin
     begin
       Close;
       SQL.Clear;
-      SQL.Add('SELECT User_Auth.ID, User_OP.OP_WaterInfo_Look, ' +
-        'User_OP.OP_WateInfo_Edit, User_Auth.Login_ID, ' +
-        'User_Auth.Login_Pass, User_Auth.Login_Name, ' +
-        'User_Auth.Login_Time, User_Auth.Reg_Time, ' +
-        'User_Auth.Login_Count FROM User_Auth ' +
-        'INNER JOIN User_OP ON User_Auth.ID = User_OP.OP_ID WHERE ' +
-        'User_Auth.Login_ID = ' + '''' + LoginName + '''' + ' AND ' +
-        'User_Auth.Login_Pass = ' + '''' + LoginPass + '''' + '');
-       //DoStatus(SQL);
+      SQL.Add('SELECT User_Auth.ID, User_OP.OP_WaterInfo_Look, ' + 'User_OP.OP_WateInfo_Edit, User_Auth.Login_ID, ' + 'User_Auth.Login_Pass, User_Auth.Login_Name, ' + 'User_Auth.Login_Time, User_Auth.Reg_Time, ' + 'User_Auth.Login_Count FROM User_Auth ' + 'INNER JOIN User_OP ON User_Auth.ID = User_OP.OP_ID WHERE ' + 'User_Auth.Login_ID = ' + '''' + LoginName + '''' + ' AND ' + 'User_Auth.Login_Pass = ' + '''' + LoginPass + '''' + '');
+      // DoStatus(SQL);
       Open;
       if RecordCount > 0 then
       begin
@@ -179,3 +184,4 @@ begin
 end;
 
 end.
+

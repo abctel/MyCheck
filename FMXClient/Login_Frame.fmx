@@ -169,8 +169,8 @@ object FrameLogin: TFrameLogin
     Size.Height = 94.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 4
-    Viewport.Width = 325.000000000000000000
-    Viewport.Height = 94.000000000000000000
+    Viewport.Width = 321.000000000000000000
+    Viewport.Height = 90.000000000000000000
   end
   object pnlLogo: TSkinFMXPanel
     ParentMouseEvent = False
