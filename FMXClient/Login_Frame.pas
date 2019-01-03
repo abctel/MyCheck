@@ -11,11 +11,17 @@ uses
   // --------其它单元---------
   DB_Module, Main_Frame,
   // --------ZServer4D---------
-  DoStatusIO, DataFrameEngine, CommunicationFramework,
+  DoStatusIO, DataFrameEngine, CommunicationFramework, MemoryStream64,
+  CoreCipher,
   // --------三方控件单元---------
   uSkinButtonType, uSkinFireMonkeyButton, FMX.Controls.Presentation, FMX.Edit,
   uSkinFireMonkeyEdit, FMX.ScrollBox, FMX.Memo, uSkinFireMonkeyControl,
-  uSkinPanelType, uSkinFireMonkeyPanel, uSkinImageType, uSkinFireMonkeyImage;
+  uSkinPanelType, uSkinFireMonkeyPanel, uSkinImageType, uSkinFireMonkeyImage,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
+  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, System.Rtti, FMX.Grid.Style,
+  Data.Bind.EngExt, Fmx.Bind.DBEngExt, Fmx.Bind.Grid, System.Bindings.Outputs,
+  Fmx.Bind.Editors, Data.Bind.Components, Data.Bind.Grid, Data.Bind.DBScope, FMX.Grid,
+  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.Stan.StorageJSON;
 
 type
   TFrameLogin = class(TFrame)
@@ -31,6 +37,13 @@ type
     pnlLogo: TSkinFMXPanel;
     edtLogo: TSkinFMXEdit;
     imgLogo: TSkinFMXImage;
+    DataSource1: TDataSource;
+    FDMemTable1: TFDMemTable;
+    Grid1: TGrid;
+    BindSourceDB1: TBindSourceDB;
+    BindingsList1: TBindingsList;
+    LinkGridToDataSourceBindSourceDB1: TLinkGridToDataSource;
+    FDStanStorageJSONLink1: TFDStanStorageJSONLink;
     procedure btnLoginClick(Sender: TObject);
   private
     { Private declarations }
@@ -70,7 +83,7 @@ end;
 
 procedure TFrameLogin.UserLogin;
 var
-  tempStm: TDataFrameEngine;
+  tempDFE: TDataFrameEngine;
 begin
 //显示等待状态
   ShowWaitingFrame(Self, '登录中...');
@@ -93,25 +106,33 @@ begin
                   if sState then
                   begin
                   //获取用户资料
-                    tempStm := TDataFrameEngine.Create;
-                    tempStm.WriteString(edtUserName.Text);
-                    DBM.Client.SendTunnel.SendStreamCmdP('cmd_QueryLoginUserInfo', tempStm,
+                    tempDFE := TDataFrameEngine.Create;
+
+                    tempDFE.WriteString(edtUserName.Text);
+                    DBM.Client.SendTunnel.SendStreamCmdP('cmd_QueryLoginUserInfo', tempDFE,
                       procedure(Sender: TPeerIO; ResultData: TDataFrameEngine)
+                      var
+                        tempSTM: TMemoryStream64;
                       begin
-                        DoStatus('1');
-                        DoStatus(ResultData.Reader.ReadString);
+                        tempSTM := TMemoryStream64.Create;
+
+                        try
+                          ResultData.Reader.ReadStream(tempSTM);
+                          tempSTM.Position := 0;
+                       // DoStatus(tempSTM.ReadString.Text);
+                          FDMemTable1.LoadFromStream(tempSTM, TFDStorageFormat.sfJSON);
+                          DoStatus(FDMemTable1.FieldByName('Login_Name').AsString);
+                          DoStatus('CRC32:' + TCipher.GenerateHashString(THashSecurity.hsCRC32, tempSTM.Memory, tempSTM.Size));
+                          tempSTM.Free;
+                        except
+                          on E: Exception do
+                            DoStatus(E.ClassName + ': ' + E.Message);
+                        end;
+
                       end);
-                    tempStm.Free;
-
-
-
-
-
-
-
 
 //                  //隐藏等待状态
-                    HideWaitingFrame;
+                        HideWaitingFrame;
 //                    //ShowMessageBoxFrame(FrmMain, '登录成功', '', TMsgDlgType.mtInformation, ['确定'], nil);
 //                    //释放原主界面
 //                    uFuncCommon.FreeAndNil(GlobalMainFrame);

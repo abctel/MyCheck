@@ -12,7 +12,7 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Intf, FireDAC.DApt, FireDAC.Stan.Async,
   FireDAC.Stan.StorageXML, FireDAC.Stan.StorageJSON, FireDAC.Stan.Storage,
   // ZServer4D
-  MemoryStream64, PascalStrings, DoStatusIO;
+  MemoryStream64, PascalStrings, DoStatusIO, CoreCipher;
 
 type
   TServerDM = class(TDataModule)
@@ -125,14 +125,15 @@ begin
       SQL.Add(ASQL);
       DoStatus(ASQL);
       Open;
-      DoStatus(RecordCount);
       //Data.DataView.
       // TFDStorageFormat.sfBinary为Stream的文件格式，该方法有多种格式可选
       SaveToStream(Result, TFDStorageFormat.sfJSON);
+      DoStatus(FieldByName('Login_Name').AsString);
       Result.Position := 0;
-      DoStatus(Result.ReadString);
+      DoStatus('未压缩 CRC32:' + TCipher.GenerateHashString(THashSecurity.hsCRC32, Result.Memory, Result.Size));
       Close;
     end;
+
 
   except
     on E: Exception do

@@ -143,10 +143,15 @@ var
   tempStm: TMemoryStream64;
 begin
   tempStm := TMemoryStream64.Create;
-  tempStm.Position := 0;
-  tempStm := MyQuery('SELECT User_Auth.Login_Name, User_OP.OP_WaterInfo_Look, User_OP.OP_WateInfo_Edit ' + 'FROM User_Auth ' + 'INNER JOIN User_OP ON User_OP.OP_ID = User_Auth.ID ' + 'WHERE User_Auth.Login_ID = ' + '''' + InData.Reader.ReadString + '''');
-  tempStm.Position := 0;
-  OutData.Reader.ReadStream(tempStm);
+  try
+    tempStm := MyQuery('SELECT User_Auth.Login_Name, User_OP.OP_WaterInfo_Look, User_OP.OP_WateInfo_Edit ' + 'FROM User_Auth ' + 'INNER JOIN User_OP ON User_OP.OP_ID = User_Auth.ID ' + 'WHERE User_Auth.Login_ID = ' + '''' + InData.Reader.ReadString + '''');
+    tempStm.Position := 0;
+    DoStatus('Î´Ñ¹Ëõ CRC32:' + TCipher.GenerateHashString(THashSecurity.hsCRC32, tempStm.Memory, tempStm.Size));
+    OutData.WriteStream(tempStm);
+  except
+    on E: Exception do
+      Writeln(E.ClassName, ': ', E.Message);
+  end;
   tempStm.Free;
 end;
 

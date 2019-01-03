@@ -212,8 +212,9 @@ object AuthDoubleTunnelClientForm: TAuthDoubleTunnelClientForm
     Connection = con1
     SQL.Strings = (
       
-        'UPDATE User SET Login_Count = Login_Count + 1 , Login_Time = NOW' +
-        '() WHERE Login_Name = '#39'abctel'#39)
+        'SELECT User_Auth.Login_Name, User_OP.OP_WaterInfo_Look, User_OP.' +
+        'OP_WateInfo_Edit FROM User_Auth INNER JOIN User_OP ON User_OP.OP' +
+        '_ID = User_Auth.ID WHERE User_Auth.Login_ID = '#39'abctel'#39)
     Left = 544
     Top = 448
   end
