@@ -34,22 +34,6 @@ Coordinates=77,78,93,36
 [edtUserName]
 Coordinates=220,10,93,58
 
-[FDMemTable1]
-Coordinates=10,10,99,36
-Visible=False
-
-[DataSource1]
-Coordinates=437,133,89,36
-
 []
-Coordinates=437,210,91,36
-
-[Grid1]
-Coordinates=379,201,46,58
-
-[BindSourceDB1]
-Coordinates=10,10,106,80
-
-[BindingsList1]
 Coordinates=466,1,91,36
 

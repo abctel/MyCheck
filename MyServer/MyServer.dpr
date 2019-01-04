@@ -142,17 +142,21 @@ procedure TMyServer.cmd_QueryLoginUserInfo(Sender: TPeerClient; InData, OutData:
 var
   tempStm: TMemoryStream64;
 begin
-  tempStm := TMemoryStream64.Create;
   try
-    tempStm := MyQuery('SELECT User_Auth.Login_Name, User_OP.OP_WaterInfo_Look, User_OP.OP_WateInfo_Edit ' + 'FROM User_Auth ' + 'INNER JOIN User_OP ON User_OP.OP_ID = User_Auth.ID ' + 'WHERE User_Auth.Login_ID = ' + '''' + InData.Reader.ReadString + '''');
+    tempStm := TMemoryStream64.Create;
+    //查询数据
+    tempStm := MyQuery('SELECT User_Auth.Login_Name, User_OP.OP_WaterInfo_Look, User_OP.OP_WaterInfo_Edit ' + 'FROM User_Auth ' + 'INNER JOIN User_OP ON User_OP.OP_ID = User_Auth.ID ' + 'WHERE User_Auth.Login_ID = ' + '''' + InData.Reader.ReadString + '''');
     tempStm.Position := 0;
-    DoStatus('未压缩 CRC32:' + TCipher.GenerateHashString(THashSecurity.hsCRC32, tempStm.Memory, tempStm.Size));
+    //效验发送数据完整性
+    //DoStatus('未压缩 CRC32:' + TCipher.GenerateHashString(THashSecurity.hsCRC32, tempStm.Memory, tempStm.Size));
+    //发送数据
     OutData.WriteStream(tempStm);
+    tempStm.Free;
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);
   end;
-  tempStm.Free;
+
 end;
 
 procedure TMyServer.cmd_Stream(Sender: TPeerClient; InData: TDataFrameEngine);
@@ -177,7 +181,7 @@ begin
     AuthIO.Bye; // TVirtualAuthIO中的bye等同于Free，如果我们不Bye，会造成内存泄漏
     exit;
   end;
-
+  //登陆验证过程
   if AuthQuery(AuthIO.UserID, AuthIO.Passwd) then
   begin
     AuthIO.Accept;
@@ -228,10 +232,11 @@ var
   SQL: string;
 begin
   inherited UserLoginSuccess(UserDefineIO);
-  // 更新登陆时间或者返回人信息
+  // 更新登陆时间
   SQL := 'UPDATE User_Auth SET User_Auth.Login_Count = User_Auth.Login_Count + 1 , User_Auth.Login_Time = NOW() WHERE User_Auth.Login_ID = ''' + UserDefineIO.UserID + '''';
   MyExec(SQL);
-  DoStatus(SQL);
+  //显示数据查询语句
+  //DoStatus(SQL);
 end;
 
 procedure TMyServer.UserOut(UserDefineIO: TPeerClientUserDefineForRecvTunnel_VirtualAuth);

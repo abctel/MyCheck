@@ -19,8 +19,8 @@ uses
   uSkinPanelType, uSkinFireMonkeyPanel, uSkinImageType, uSkinFireMonkeyImage,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
   FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, System.Rtti, FMX.Grid.Style,
-  Data.Bind.EngExt, Fmx.Bind.DBEngExt, Fmx.Bind.Grid, System.Bindings.Outputs,
-  Fmx.Bind.Editors, Data.Bind.Components, Data.Bind.Grid, Data.Bind.DBScope, FMX.Grid,
+  Data.Bind.EngExt, FMX.Bind.DBEngExt, FMX.Bind.Grid, System.Bindings.Outputs,
+  FMX.Bind.Editors, Data.Bind.Components, Data.Bind.Grid, Data.Bind.DBScope, FMX.Grid,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.Stan.StorageJSON;
 
 type
@@ -37,13 +37,6 @@ type
     pnlLogo: TSkinFMXPanel;
     edtLogo: TSkinFMXEdit;
     imgLogo: TSkinFMXImage;
-    DataSource1: TDataSource;
-    FDMemTable1: TFDMemTable;
-    Grid1: TGrid;
-    BindSourceDB1: TBindSourceDB;
-    BindingsList1: TBindingsList;
-    LinkGridToDataSourceBindSourceDB1: TLinkGridToDataSource;
-    FDStanStorageJSONLink1: TFDStanStorageJSONLink;
     procedure btnLoginClick(Sender: TObject);
   private
     { Private declarations }
@@ -85,7 +78,7 @@ procedure TFrameLogin.UserLogin;
 var
   tempDFE: TDataFrameEngine;
 begin
-//显示等待状态
+  // 显示等待状态
   ShowWaitingFrame(Self, '登录中...');
   // 异步连接服务端
   DBM.Client.AsyncConnectP(HostIP, RecvPort, SendPort,
@@ -105,9 +98,8 @@ begin
                 begin
                   if sState then
                   begin
-                  //获取用户资料
+                    // 获取用户资料
                     tempDFE := TDataFrameEngine.Create;
-
                     tempDFE.WriteString(edtUserName.Text);
                     DBM.Client.SendTunnel.SendStreamCmdP('cmd_QueryLoginUserInfo', tempDFE,
                       procedure(Sender: TPeerIO; ResultData: TDataFrameEngine)
@@ -119,32 +111,37 @@ begin
                         try
                           ResultData.Reader.ReadStream(tempSTM);
                           tempSTM.Position := 0;
-                       // DoStatus(tempSTM.ReadString.Text);
-                          FDMemTable1.LoadFromStream(tempSTM, TFDStorageFormat.sfJSON);
-                          DoStatus(FDMemTable1.FieldByName('Login_Name').AsString);
-                          DoStatus('CRC32:' + TCipher.GenerateHashString(THashSecurity.hsCRC32, tempSTM.Memory, tempSTM.Size));
-                          tempSTM.Free;
+                          DBM.mtbl_Main.LoadFromStream(tempSTM, TFDStorageFormat.sfBinary);
+                          //Memo1.Lines.Add(DBM.mtbl_Main.FieldByName('Login_Name').AsString);
+                          UserInfo.var_Login_Name := DBM.mtbl_Main.FieldByName('Login_Name').AsString;
+                          //Memo1.Lines.Add(var_Login_Name);
+                          UserInfo.var_WaterInfo_Look := DBM.mtbl_Main.FieldByName('OP_WaterInfo_Look').AsBoolean;
+                          UserInfo.var_WaterInfo_Edit := DBM.mtbl_Main.FieldByName('OP_WaterInfo_Edit').AsBoolean;
+
+                          // 效验数据包大小
+                          Memo1.Lines.Add('CRC32:' + TCipher.GenerateHashString(THashSecurity.hsCRC32, tempSTM.Memory, tempSTM.Size));
+                          //tempSTM.Free;
                         except
                           on E: Exception do
                             DoStatus(E.ClassName + ': ' + E.Message);
                         end;
 
                       end);
+                    tempDFE.Free;
+                    // 隐藏等待状态
+                    HideWaitingFrame;
+                    //ShowMessageBoxFrame(FrmMain, '登录成功', '', TMsgDlgType.mtInformation, ['确定'], nil);
+                    // 释放原主界面
+                    uFuncCommon.FreeAndNil(GlobalMainFrame);
 
-//                  //隐藏等待状态
-                        HideWaitingFrame;
-//                    //ShowMessageBoxFrame(FrmMain, '登录成功', '', TMsgDlgType.mtInformation, ['确定'], nil);
-//                    //释放原主界面
-//                    uFuncCommon.FreeAndNil(GlobalMainFrame);
-//
-//                    //进入主界面
-//                    HideFrame(Self, hfcttBeforeReturnFrame);
-//                    ShowFrame(TFrame(GlobalMainFrame), TFrameMain, FrmMain, nil, nil, nil, Application, True, True, ufsefDefault);
-//                    GlobalMainFrame.FrameHistroy := CurrentFrameHistroy;
+                    // 进入主界面
+                    HideFrame(Self, hfcttBeforeReturnFrame);
+                    ShowFrame(TFrame(GlobalMainFrame), TFrameMain, FrmMain, nil, nil, nil, Application, True, True, ufsefDefault);
+                    GlobalMainFrame.FrameHistroy := CurrentFrameHistroy;
                   end
                   else
                   begin
-                  //隐藏等待状态
+                    // 隐藏等待状态
                     HideWaitingFrame;
                     ShowMessageBoxFrame(FrmMain, '登录失败', '网络错误，请检查网络后重新再试！', TMsgDlgType.mtError, ['确定'], nil);
                     Exit;
@@ -153,7 +150,7 @@ begin
             end
             else
             begin
-              //隐藏等待状态
+              // 隐藏等待状态
               HideWaitingFrame;
               ShowMessageBoxFrame(FrmMain, '登录失败', '账号或密码错误，请重新再试！', TMsgDlgType.mtError, ['确定'], nil);
               Exit;
@@ -162,7 +159,7 @@ begin
       end
       else
       begin
-      //隐藏等待状态
+        // 隐藏等待状态
         HideWaitingFrame;
         ShowMessageBoxFrame(GlobalLoginFrame, '登录失败', '网络错误，请检查网络后重新再试！', TMsgDlgType.mtError, ['确定'], nil);
         Exit;

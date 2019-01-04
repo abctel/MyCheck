@@ -200,4 +200,23 @@ object DBM: TDBM
     Left = 272
     Top = 344
   end
+  object mtbl_Main: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 336
+    Top = 272
+  end
+  object FDStanStorageJSONLink1: TFDStanStorageJSONLink
+    Left = 480
+    Top = 312
+  end
+  object FDStanStorageBinLink1: TFDStanStorageBinLink
+    Left = 488
+    Top = 376
+  end
 end

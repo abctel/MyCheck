@@ -10,13 +10,16 @@ uses
   // --------ZServer4D---------
   DoStatusIO, DataFrameEngine, CommunicationFramework, CoreClasses, Cadencer,
   CommunicationFramework_Client_CrossSocket, CommunicationFramework_Client_ICS,
-  CommunicationFramework_Client_Indy,
+  CommunicationFramework_Client_Indy, PascalStrings,
   CommunicationFrameworkDoubleTunnelIO_VirtualAuth,
   // --------其它单元---------
   // Login_Frame,
   // --------三方控件单元---------
   uSkinScrollControlType, uSkinScrollBoxType, uSkinLabelType, uSkinEditType,
-  uSkinPanelType, uSkinMaterial, uSkinButtonType, FMX.Types, Vcl.ExtCtrls;
+  uSkinPanelType, uSkinMaterial, uSkinButtonType, FMX.Types, Vcl.ExtCtrls,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
+  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, FireDAC.Stan.StorageJSON, FireDAC.Stan.StorageBin;
 
 type
   TDBM = class(TDataModule)
@@ -32,6 +35,9 @@ type
     btnOrangeRedBorderWhiteBackButtonMaterial: TSkinButtonDefaultMaterial;
     edtInputEditHasHelpTextMaterial: TSkinEditDefaultMaterial;
     Timer1: TTimer;
+    mtbl_Main: TFDMemTable;
+    FDStanStorageJSONLink1: TFDStanStorageJSONLink;
+    FDStanStorageBinLink1: TFDStanStorageBinLink;
     procedure DataModuleDestroy(Sender: TObject);
     procedure DataModuleCreate(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -47,6 +53,9 @@ type
 
 var
   DBM: TDBM;
+//  var_Login_Name: string;
+//  var_WaterInfo_Look: Boolean;
+//  var_WaterInfo_Edit: Boolean;
 
 implementation
 
@@ -59,17 +68,19 @@ uses
 procedure TDBM.DataModuleDestroy(Sender: TObject);
 begin
   DisposeObject(Client);
-  DeleteDoStatusHook(self);
+  DeleteDoStatusHook(GlobalLoginFrame);
+  DisposeObject(UserInfo);
 end;
 
 procedure TDBM.DataModuleCreate(Sender: TObject);
 begin
+  UserInfo := TUserInfo.Create;
   RecvTunnel := TCommunicationFramework_Client_CrossSocket.Create;
   SendTunnel := TCommunicationFramework_Client_CrossSocket.Create;
 
   Client := TCommunicationFramework_DoubleTunnelClient_VirtualAuth.Create(RecvTunnel, SendTunnel);
 
-  AddDoStatusHook(Self, DoStatusNear);
+  AddDoStatusHook(GlobalLoginFrame, DoStatusNear);
 end;
 
 procedure TDBM.DoStatusNear(AText: string; const ID: Integer);

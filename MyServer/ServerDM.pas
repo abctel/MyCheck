@@ -11,6 +11,7 @@ uses
   FireDAC.Comp.Client, FireDAC.Stan.Consts, FireDAC.Stan.Def, FireDAC.Phys.MySQL,
   FireDAC.Stan.Pool, FireDAC.Stan.Intf, FireDAC.DApt, FireDAC.Stan.Async,
   FireDAC.Stan.StorageXML, FireDAC.Stan.StorageJSON, FireDAC.Stan.Storage,
+  FireDAC.Stan.StorageBin,
   // ZServer4D
   MemoryStream64, PascalStrings, DoStatusIO, CoreCipher;
 
@@ -20,6 +21,7 @@ type
     conQuery: TFDQuery;
     conManager: TFDManager;
     FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink;
+    FDStanStorageBinLink1:TFDStanStorageBinLink;
     FDStanStorageXMLLink1: TFDStanStorageXMLLink;
   public
     constructor Create;
@@ -127,14 +129,13 @@ begin
       Open;
       //Data.DataView.
       // TFDStorageFormat.sfBinary为Stream的文件格式，该方法有多种格式可选
-      SaveToStream(Result, TFDStorageFormat.sfJSON);
+      SaveToStream(Result, TFDStorageFormat.sfBinary);
       DoStatus(FieldByName('Login_Name').AsString);
       Result.Position := 0;
+      //效验数据包
       DoStatus('未压缩 CRC32:' + TCipher.GenerateHashString(THashSecurity.hsCRC32, Result.Memory, Result.Size));
       Close;
     end;
-
-
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);
@@ -165,7 +166,7 @@ begin
     begin
       Close;
       SQL.Clear;
-      SQL.Add('SELECT User_Auth.ID, User_OP.OP_WaterInfo_Look, ' + 'User_OP.OP_WateInfo_Edit, User_Auth.Login_ID, ' + 'User_Auth.Login_Pass, User_Auth.Login_Name, ' + 'User_Auth.Login_Time, User_Auth.Reg_Time, ' + 'User_Auth.Login_Count FROM User_Auth ' + 'INNER JOIN User_OP ON User_Auth.ID = User_OP.OP_ID WHERE ' + 'User_Auth.Login_ID = ' + '''' + LoginName + '''' + ' AND ' + 'User_Auth.Login_Pass = ' + '''' + LoginPass + '''' + '');
+      SQL.Add('SELECT User_Auth.ID, User_OP.OP_WaterInfo_Look, ' + 'User_OP.OP_WaterInfo_Edit, User_Auth.Login_ID, ' + 'User_Auth.Login_Pass, User_Auth.Login_Name, ' + 'User_Auth.Login_Time, User_Auth.Reg_Time, ' + 'User_Auth.Login_Count FROM User_Auth ' + 'INNER JOIN User_OP ON User_Auth.ID = User_OP.OP_ID WHERE ' + 'User_Auth.Login_ID = ' + '''' + LoginName + '''' + ' AND ' + 'User_Auth.Login_Pass = ' + '''' + LoginPass + '''' + '');
       // DoStatus(SQL);
       Open;
       if RecordCount > 0 then

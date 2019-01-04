@@ -21,11 +21,17 @@ const
   /// </summary>
   DelayTime = 5 * 60 * 1000;
 
+type
+    { 用户登陆信息 }
+  TUserInfo = class
+  public
+    var_Login_Name: string;
+    var_WaterInfo_Look: Boolean;
+    var_WaterInfo_Edit: Boolean;
+  end;
+
 var
-  { 用户登陆信息 }
-  Login_Name: string;
-  OP_WaterInfo_Look: Boolean;
-  OP_WateInfo_Edit: Boolean;
+  UserInfo: TUserInfo;
 
 implementation
 

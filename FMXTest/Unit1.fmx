@@ -7,17 +7,18 @@ object Form1: TForm1
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
   DesignerMasterStyle = 0
   object Memo1: TMemo
     Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
     DataDetectorTypes = []
     Align = Client
     Size.Width = 640.000000000000000000
-    Size.Height = 439.000000000000000000
+    Size.Height = 399.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
     Viewport.Width = 636.000000000000000000
-    Viewport.Height = 435.000000000000000000
+    Viewport.Height = 395.000000000000000000
   end
   object Button1: TButton
     Align = Top
@@ -27,6 +28,16 @@ object Form1: TForm1
     TabOrder = 1
     Text = 'Button1'
     OnClick = Button1Click
+  end
+  object Button2: TButton
+    Align = Top
+    Position.Y = 41.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    Text = 'Button2'
+    OnClick = Button2Click
   end
   object FDMemTable1: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -38,5 +49,15 @@ object Form1: TForm1
     UpdateOptions.AutoCommitUpdates = True
     Left = 304
     Top = 224
+  end
+  object Timer1: TTimer
+    Interval = 10
+    OnTimer = Timer1Timer
+    Left = 480
+    Top = 240
+  end
+  object FDStanStorageJSONLink1: TFDStanStorageJSONLink
+    Left = 408
+    Top = 344
   end
 end

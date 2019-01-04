@@ -14,7 +14,7 @@ uses
   CommunicationFramework_Client_Indy,
   CommunicationFrameworkDoubleTunnelIO_VirtualAuth
   // --------其它单元---------
-  ;
+    ;
 
 type
   TFrmMain = class(TForm)
@@ -32,13 +32,12 @@ var
 implementation
 
 uses
-Login_Frame, DB_Module;
+  Login_Frame, DB_Module;
 {$R *.fmx}
 
 procedure TFrmMain.FormDestroy(Sender: TObject);
 begin
   DBM.Destroy;
-
 end;
 
 procedure TFrmMain.FormShow(Sender: TObject);
@@ -47,8 +46,6 @@ begin
     Application, True, True, ufsefNone);
   GlobalLoginFrame.FrameHistroy := CurrentFrameHistroy;
   DBM := TDBM.Create(nil);
-
-
 end;
 
 end.

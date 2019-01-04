@@ -12,6 +12,9 @@
         <Projects Include="FMXClient\FMXClient.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="FMXTest\Project1.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -47,14 +50,23 @@
     <Target Name="FMXClient:Make">
         <MSBuild Projects="FMXClient\FMXClient.dproj" Targets="Make"/>
     </Target>
+    <Target Name="Project1">
+        <MSBuild Projects="FMXTest\Project1.dproj"/>
+    </Target>
+    <Target Name="Project1:Clean">
+        <MSBuild Projects="FMXTest\Project1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Project1:Make">
+        <MSBuild Projects="FMXTest\Project1.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="MyServer;VirtualAuth_Client;FMXClient"/>
+        <CallTarget Targets="MyServer;VirtualAuth_Client;FMXClient;Project1"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="MyServer:Clean;VirtualAuth_Client:Clean;FMXClient:Clean"/>
+        <CallTarget Targets="MyServer:Clean;VirtualAuth_Client:Clean;FMXClient:Clean;Project1:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="MyServer:Make;VirtualAuth_Client:Make;FMXClient:Make"/>
+        <CallTarget Targets="MyServer:Make;VirtualAuth_Client:Make;FMXClient:Make;Project1:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
