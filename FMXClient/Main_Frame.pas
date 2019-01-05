@@ -60,9 +60,11 @@ constructor TFrameMain.Create(AOwner: TComponent);
 begin
   inherited;
   try
-    ShowMessageBoxFrame(FrmMain, UserInfo.var_Login_Name, UserInfo.var_Login_Name, TMsgDlgType.mtError, ['确定'], nil);
+    //ShowMessageBoxFrame(FrmMain, UserInfo.var_Login_Name, UserInfo.var_Login_Name, TMsgDlgType.mtError, ['确定'], nil);
+    //对用户资料进行赋值操作
+
     clab_Wellcome.Properties.ColorTextCollection.Items[1].Text := UserInfo.var_Login_Name;
-//    clab_Wellcome.Properties.ColorTextCollection.Items[1].Text := 'dd';
+
 
   except
     on E: Exception do

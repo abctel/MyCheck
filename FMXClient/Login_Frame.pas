@@ -111,16 +111,26 @@ begin
                         try
                           ResultData.Reader.ReadStream(tempSTM);
                           tempSTM.Position := 0;
+                          //读取反馈的数据库信息
                           DBM.mtbl_Main.LoadFromStream(tempSTM, TFDStorageFormat.sfBinary);
-                          //Memo1.Lines.Add(DBM.mtbl_Main.FieldByName('Login_Name').AsString);
+                          //分解数据集中的个人信息
                           UserInfo.var_Login_Name := DBM.mtbl_Main.FieldByName('Login_Name').AsString;
-                          //Memo1.Lines.Add(var_Login_Name);
                           UserInfo.var_WaterInfo_Look := DBM.mtbl_Main.FieldByName('OP_WaterInfo_Look').AsBoolean;
                           UserInfo.var_WaterInfo_Edit := DBM.mtbl_Main.FieldByName('OP_WaterInfo_Edit').AsBoolean;
-
+                          tempSTM.Free;
                           // 效验数据包大小
-                          Memo1.Lines.Add('CRC32:' + TCipher.GenerateHashString(THashSecurity.hsCRC32, tempSTM.Memory, tempSTM.Size));
-                          //tempSTM.Free;
+                          //Memo1.Lines.Add('CRC32:' + TCipher.GenerateHashString(THashSecurity.hsCRC32, tempSTM.Memory, tempSTM.Size));
+
+                          // 隐藏等待状态
+                          HideWaitingFrame;
+                          //ShowMessageBoxFrame(FrmMain, '登录成功', '', TMsgDlgType.mtInformation, ['确定'], nil);
+                          // 释放原主界面
+                          uFuncCommon.FreeAndNil(GlobalMainFrame);
+
+                          // 进入主界面
+                          HideFrame(Self, hfcttBeforeReturnFrame);
+                          ShowFrame(TFrame(GlobalMainFrame), TFrameMain, FrmMain, nil, nil, nil, Application, True, True, ufsefDefault);
+                          GlobalMainFrame.FrameHistroy := CurrentFrameHistroy;
                         except
                           on E: Exception do
                             DoStatus(E.ClassName + ': ' + E.Message);
@@ -128,16 +138,7 @@ begin
 
                       end);
                     tempDFE.Free;
-                    // 隐藏等待状态
-                    HideWaitingFrame;
-                    //ShowMessageBoxFrame(FrmMain, '登录成功', '', TMsgDlgType.mtInformation, ['确定'], nil);
-                    // 释放原主界面
-                    uFuncCommon.FreeAndNil(GlobalMainFrame);
 
-                    // 进入主界面
-                    HideFrame(Self, hfcttBeforeReturnFrame);
-                    ShowFrame(TFrame(GlobalMainFrame), TFrameMain, FrmMain, nil, nil, nil, Application, True, True, ufsefDefault);
-                    GlobalMainFrame.FrameHistroy := CurrentFrameHistroy;
                   end
                   else
                   begin
