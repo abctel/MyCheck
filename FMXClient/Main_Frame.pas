@@ -15,20 +15,27 @@ uses
   uSkinImageListPlayerType, uSkinFireMonkeyImageListPlayer,
   uSkinScrollControlType, uSkinCustomListType, uSkinVirtualListType,
   uSkinListViewType, uSkinFireMonkeyListView, uSkinMultiColorLabelType,
-  uSkinFireMonkeyMultiColorLabel;
+  uSkinFireMonkeyMultiColorLabel, uSkinImageType, uSkinFireMonkeyImage, uSkinLabelType, uSkinFireMonkeyLabel,
+  uSkinItemDesignerPanelType, uSkinFireMonkeyItemDesignerPanel;
 
 type
   TFrameMain = class(TFrame)
     pnlToolBar: TSkinFMXPanel;
     btnExit: TSkinFMXButton;
     pnlContent: TSkinFMXPanel;
-    pnlListImg: TSkinFMXPanel;
     pnlMain: TSkinFMXPanel;
-    ilpListImg: TSkinFMXImageListPlayer;
-    SkinImageList1: TSkinImageList;
-    SkinFMXListView1: TSkinFMXListView;
-    SkinFMXPanel1: TSkinFMXPanel;
-    clab_Wellcome: TSkinFMXMultiColorLabel;
+    lvMain: TSkinFMXListView;
+    dspCYGN: TSkinFMXItemDesignerPanel;
+    SkinFMXImage2: TSkinFMXImage;
+    SkinFMXLabel5: TSkinFMXLabel;
+    dspHeader: TSkinFMXItemDesignerPanel;
+    lblHCaption: TSkinFMXLabel;
+    dspTotal: TSkinFMXItemDesignerPanel;
+    lblCaption: TSkinFMXLabel;
+    lblPrice: TSkinFMXLabel;
+    lblNum: TSkinFMXLabel;
+    lblNum1: TSkinFMXLabel;
+    lblPrice1: TSkinFMXLabel;
     procedure btnExitClick(Sender: TObject);
   private
     { Private declarations }
@@ -63,7 +70,7 @@ begin
     //ShowMessageBoxFrame(FrmMain, UserInfo.var_Login_Name, UserInfo.var_Login_Name, TMsgDlgType.mtError, ['确定'], nil);
     //对用户资料进行赋值操作
 
-    clab_Wellcome.Properties.ColorTextCollection.Items[1].Text := UserInfo.var_Login_Name;
+    //clab_Wellcome.Properties.ColorTextCollection.Items[1].Text := UserInfo.var_Login_Name;
 
 
   except

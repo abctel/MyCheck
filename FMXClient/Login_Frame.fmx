@@ -23,28 +23,9 @@ object FrameLogin: TFrameLogin
     ComponentTypeUseKind = ctukDefault
     MaterialUseKind = mukRef
     KeepSelfOwnMaterial = True
-    SelfOwnMaterial.IsAutoCenterIconAndCaption = False
-    SelfOwnMaterial.DrawDetailParam.FontTrimming = fttNone
-    SelfOwnMaterial.DrawDetailParam.FontHorzAlign = fhaLeft
-    SelfOwnMaterial.DrawDetailParam.FontVertAlign = fvaTop
-    SelfOwnMaterial.DrawDetail1Param.FontTrimming = fttNone
-    SelfOwnMaterial.DrawDetail1Param.FontHorzAlign = fhaLeft
-    SelfOwnMaterial.DrawDetail1Param.FontVertAlign = fvaTop
     SelfOwnMaterial.DrawHelpTextParam.FontColor = claGray
     SelfOwnMaterial.DrawHelpTextParam.DrawFont.Color = claGray
     SelfOwnMaterial.DrawHelpTextParam.DrawFont.FontColor.Color = claGray
-    SelfOwnMaterial.DrawHelpTextParam.FontTrimming = fttNone
-    SelfOwnMaterial.DrawHelpTextParam.FontHorzAlign = fhaLeft
-    SelfOwnMaterial.DrawHelpTextParam.FontVertAlign = fvaTop
-    SelfOwnMaterial.DrawCaptionParam.FontTrimming = fttNone
-    SelfOwnMaterial.DrawCaptionParam.FontHorzAlign = fhaLeft
-    SelfOwnMaterial.DrawCaptionParam.FontVertAlign = fvaTop
-    SelfOwnMaterial.NormalPicture.IsClipRound = False
-    SelfOwnMaterial.HoverPicture.IsClipRound = False
-    SelfOwnMaterial.DownPicture.IsClipRound = False
-    SelfOwnMaterial.DisabledPicture.IsClipRound = False
-    SelfOwnMaterial.FocusedPicture.IsClipRound = False
-    SelfOwnMaterial.PushedPicture.IsClipRound = False
     RefMaterial = DBM.btnBlueColorButtonMaterial
     MouseDownFocus = False
     Align = Top
@@ -66,8 +47,6 @@ object FrameLogin: TFrameLogin
     Properties.AutoSize = False
     Properties.IsAutoPush = False
     Properties.IsPushed = False
-    Properties.Icon.IsClipRound = False
-    Properties.PushedIcon.IsClipRound = False
     Properties.ButtonIndex = -1
     Properties.PushedGroupIndex = 0
   end
@@ -76,9 +55,6 @@ object FrameLogin: TFrameLogin
     ComponentTypeUseKind = ctukDefault
     MaterialUseKind = mukRef
     KeepSelfOwnMaterial = True
-    SelfOwnMaterial.DrawCaptionParam.FontTrimming = fttNone
-    SelfOwnMaterial.DrawCaptionParam.FontHorzAlign = fhaLeft
-    SelfOwnMaterial.DrawCaptionParam.FontVertAlign = fvaTop
     RefMaterial = DBM.pnlBlackCaptionLeftMarginPanelMaterial
     MouseDownFocus = False
     Align = Top
@@ -108,28 +84,16 @@ object FrameLogin: TFrameLogin
       ComponentTypeUseKind = ctukDefault
       MaterialUseKind = mukRef
       KeepSelfOwnMaterial = True
-      SelfOwnMaterial.NormalPicture.IsClipRound = False
-      SelfOwnMaterial.HoverPicture.IsClipRound = False
-      SelfOwnMaterial.FocusedPicture.IsClipRound = False
-      SelfOwnMaterial.DisabledPicture.IsClipRound = False
       SelfOwnMaterial.DrawHelpTextParam.FontColor = claGray
       SelfOwnMaterial.DrawHelpTextParam.DrawFont.Color = claGray
       SelfOwnMaterial.DrawHelpTextParam.DrawFont.FontColor.Color = claGray
-      SelfOwnMaterial.DrawHelpTextParam.FontTrimming = fttNone
-      SelfOwnMaterial.DrawHelpTextParam.FontHorzAlign = fhaLeft
-      SelfOwnMaterial.DrawHelpTextParam.FontVertAlign = fvaTop
-      SelfOwnMaterial.DrawTextParam.FontTrimming = fttNone
-      SelfOwnMaterial.DrawTextParam.FontHorzAlign = fhaLeft
-      SelfOwnMaterial.DrawTextParam.FontVertAlign = fvaTop
       RefMaterial = DBM.edtHelpTextMaterial
       ContentMarginsLeft = 0
       ContentMarginsTop = 0
       ContentMarginsRight = 0
       ContentMarginsBottom = 0
       IsUseDefaultStyle = False
-      EditProperties.HelpIcon.IsClipRound = False
       EditProperties.IsDrawHelpWhenFocused = False
-      Properties.HelpIcon.IsClipRound = False
       Properties.IsDrawHelpWhenFocused = False
       IsInScrollBox = False
       object ClearEditButton1: TClearEditButton
@@ -147,9 +111,6 @@ object FrameLogin: TFrameLogin
     ComponentTypeUseKind = ctukDefault
     MaterialUseKind = mukRef
     KeepSelfOwnMaterial = True
-    SelfOwnMaterial.DrawCaptionParam.FontTrimming = fttNone
-    SelfOwnMaterial.DrawCaptionParam.FontHorzAlign = fhaLeft
-    SelfOwnMaterial.DrawCaptionParam.FontVertAlign = fvaTop
     RefMaterial = DBM.pnlBlackCaptionLeftMarginPanelMaterial
     MouseDownFocus = False
     Align = Top
@@ -179,28 +140,16 @@ object FrameLogin: TFrameLogin
       ComponentTypeUseKind = ctukDefault
       MaterialUseKind = mukRef
       KeepSelfOwnMaterial = True
-      SelfOwnMaterial.NormalPicture.IsClipRound = False
-      SelfOwnMaterial.HoverPicture.IsClipRound = False
-      SelfOwnMaterial.FocusedPicture.IsClipRound = False
-      SelfOwnMaterial.DisabledPicture.IsClipRound = False
       SelfOwnMaterial.DrawHelpTextParam.FontColor = claGray
       SelfOwnMaterial.DrawHelpTextParam.DrawFont.Color = claGray
       SelfOwnMaterial.DrawHelpTextParam.DrawFont.FontColor.Color = claGray
-      SelfOwnMaterial.DrawHelpTextParam.FontTrimming = fttNone
-      SelfOwnMaterial.DrawHelpTextParam.FontHorzAlign = fhaLeft
-      SelfOwnMaterial.DrawHelpTextParam.FontVertAlign = fvaTop
-      SelfOwnMaterial.DrawTextParam.FontTrimming = fttNone
-      SelfOwnMaterial.DrawTextParam.FontHorzAlign = fhaLeft
-      SelfOwnMaterial.DrawTextParam.FontVertAlign = fvaTop
       RefMaterial = DBM.edtHelpTextMaterial
       ContentMarginsLeft = 0
       ContentMarginsTop = 0
       ContentMarginsRight = 0
       ContentMarginsBottom = 0
       IsUseDefaultStyle = False
-      EditProperties.HelpIcon.IsClipRound = False
       EditProperties.IsDrawHelpWhenFocused = False
-      Properties.HelpIcon.IsClipRound = False
       Properties.IsDrawHelpWhenFocused = False
       IsInScrollBox = False
       object ClearEditButton2: TClearEditButton
@@ -222,17 +171,14 @@ object FrameLogin: TFrameLogin
     Size.Height = 94.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 4
-    Viewport.Width = 332.000000000000000000
-    Viewport.Height = 90.000000000000000000
+    Viewport.Width = 336.000000000000000000
+    Viewport.Height = 94.000000000000000000
   end
   object pnlLogo: TSkinFMXPanel
     ParentMouseEvent = False
     ComponentTypeUseKind = ctukDefault
     MaterialUseKind = mukSelfOwn
     KeepSelfOwnMaterial = True
-    SelfOwnMaterial.DrawCaptionParam.FontTrimming = fttNone
-    SelfOwnMaterial.DrawCaptionParam.FontHorzAlign = fhaLeft
-    SelfOwnMaterial.DrawCaptionParam.FontVertAlign = fvaTop
     MouseDownFocus = False
     Align = Top
     Position.Y = 50.000000000000000000
@@ -258,27 +204,15 @@ object FrameLogin: TFrameLogin
       ComponentTypeUseKind = ctukDefault
       MaterialUseKind = mukSelfOwn
       KeepSelfOwnMaterial = True
-      SelfOwnMaterial.NormalPicture.IsClipRound = False
-      SelfOwnMaterial.HoverPicture.IsClipRound = False
-      SelfOwnMaterial.FocusedPicture.IsClipRound = False
-      SelfOwnMaterial.DisabledPicture.IsClipRound = False
       SelfOwnMaterial.DrawHelpTextParam.FontColor = claGray
       SelfOwnMaterial.DrawHelpTextParam.DrawFont.Color = claGray
       SelfOwnMaterial.DrawHelpTextParam.DrawFont.FontColor.Color = claGray
-      SelfOwnMaterial.DrawHelpTextParam.FontTrimming = fttNone
-      SelfOwnMaterial.DrawHelpTextParam.FontHorzAlign = fhaLeft
-      SelfOwnMaterial.DrawHelpTextParam.FontVertAlign = fvaTop
-      SelfOwnMaterial.DrawTextParam.FontTrimming = fttNone
-      SelfOwnMaterial.DrawTextParam.FontHorzAlign = fhaLeft
-      SelfOwnMaterial.DrawTextParam.FontVertAlign = fvaTop
       ContentMarginsLeft = 0
       ContentMarginsTop = 0
       ContentMarginsRight = 0
       ContentMarginsBottom = 0
       IsUseDefaultStyle = False
-      EditProperties.HelpIcon.IsClipRound = False
       EditProperties.IsDrawHelpWhenFocused = False
-      Properties.HelpIcon.IsClipRound = False
       Properties.IsDrawHelpWhenFocused = False
       IsInScrollBox = False
     end
@@ -290,9 +224,6 @@ object FrameLogin: TFrameLogin
       SelfOwnMaterial.DrawPictureParam.IsAutoFit = True
       SelfOwnMaterial.DrawPictureParam.PictureHorzAlign = phaCenter
       SelfOwnMaterial.DrawPictureParam.PictureVertAlign = pvaCenter
-      SelfOwnMaterial.DrawCaptionParam.FontTrimming = fttNone
-      SelfOwnMaterial.DrawCaptionParam.FontHorzAlign = fhaLeft
-      SelfOwnMaterial.DrawCaptionParam.FontVertAlign = fvaTop
       MouseDownFocus = False
       Align = Client
       Size.Width = 336.000000000000000000
@@ -300,7 +231,6 @@ object FrameLogin: TFrameLogin
       Size.PlatformDefault = False
       TabOrder = 1
       Properties.AutoSize = False
-      Properties.Picture.IsClipRound = False
       Properties.Picture.PNG = {
         89504E470D0A1A0A0000000D49484452000000FB000000DA0806000000608234
         35000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
