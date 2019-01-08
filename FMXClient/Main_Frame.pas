@@ -15,8 +15,9 @@ uses
   uSkinImageListPlayerType, uSkinFireMonkeyImageListPlayer,
   uSkinScrollControlType, uSkinCustomListType, uSkinVirtualListType,
   uSkinListViewType, uSkinFireMonkeyListView, uSkinMultiColorLabelType,
-  uSkinFireMonkeyMultiColorLabel, uSkinImageType, uSkinFireMonkeyImage, uSkinLabelType, uSkinFireMonkeyLabel,
-  uSkinItemDesignerPanelType, uSkinFireMonkeyItemDesignerPanel;
+  uSkinFireMonkeyMultiColorLabel, uSkinImageType, uSkinFireMonkeyImage,
+  uSkinLabelType, uSkinFireMonkeyLabel, uSkinItemDesignerPanelType,
+  uSkinFireMonkeyItemDesignerPanel, uSkinItems;
 
 type
   TFrameMain = class(TFrame)
@@ -37,6 +38,7 @@ type
     lblNum1: TSkinFMXLabel;
     lblPrice1: TSkinFMXLabel;
     procedure btnExitClick(Sender: TObject);
+    procedure lvMainClickItem(AItem: TSkinItem);
   private
     { Private declarations }
     constructor Create(AOwner: TComponent); override;
@@ -77,6 +79,19 @@ begin
     on E: Exception do
       DoStatus(E.ClassName + ': ' + E.Message);
   end;
+end;
+
+procedure TFrameMain.lvMainClickItem(AItem: TSkinItem);
+begin
+  case AItem.Index of
+
+    4:
+      begin
+        DBM.Client.SendTunnel.SendDirectConsoleCmd('cmd_Console', 'INSERT INTO Water_Info(Project_Num) VALUES(' + '''123456''' + ');');
+        ShowMessageBoxFrame(FrmMain, AItem.Index.ToString, AItem.Index.ToString, TMsgDlgType.mtError, ['È·¶¨'], nil);
+      end;
+  end;
+
 end;
 
 end.

@@ -135,7 +135,7 @@ end;
 procedure TMyServer.cmd_Console(Sender: TPeerClient; InData: SystemString);
 begin
   DoStatus(InData);
-  // InData.
+  MyExec(InData);
 end;
 
 procedure TMyServer.cmd_QueryLoginUserInfo(Sender: TPeerClient; InData, OutData: TDataFrameEngine);
